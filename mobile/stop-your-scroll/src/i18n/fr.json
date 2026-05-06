@@ -205,5 +205,18 @@
   "account.demoOverVal": "Mode urgence",
   "account.demoUnblock": "D\u00e9bloquer",
   "account.demoUnblockVal": "\u00c9preuve \u00b7 maintien 60 s",
-  "account.version": "Synk \u00b7 v2.0.4"
+  "account.version": "Synk \u00b7 v2.0.4",
+  "onboarding.step": "\u00c9tape 1 sur 4",
+  "onboarding.title": "Faisons connaissance.",
+  "onboarding.msg1": "Bonsoir. Je suis l\u00e0 pour t\u2019aider \u00e0 reprendre tes soir\u00e9es.",
+  "onboarding.msg2": "Quelle app prend le plus de ton temps en ce moment ?",
+  "onboarding.msg3": "Instagram, surtout le soir.",
+  "onboarding.msg4": "Ok. Combien d\u2019heures, \u00e0 peu pr\u00e8s, par jour ?",
+  "onboarding.msg5": "Deux, parfois plus.",
+  "onboarding.msg6": "Et qu\u2019est-ce que tu aimerais faire \u00e0 la place ?",
+  "onboarding.msg7": "Lire, ou juste ne rien faire.",
+  "onboarding.msg8": "Parfait. Je vais te pr\u00e9parer un plan sur mesure. On commence ce soir.",
+  "onboarding.placeholder": "\u00c9cris une r\u00e9ponse\u2026",
+  "onboarding.done": "Ton plan est pr\u00eat. Bienvenue dans ton sanctuaire.",
+  "onboarding.start": "D\u00e9couvrir mon plan"
 }

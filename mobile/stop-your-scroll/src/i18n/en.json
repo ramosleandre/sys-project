@@ -205,5 +205,18 @@
   "account.demoOverVal": "Emergency mode",
   "account.demoUnblock": "Unblock",
   "account.demoUnblockVal": "Ordeal \u00b7 60 s hold",
-  "account.version": "Synk \u00b7 v2.0.4"
+  "account.version": "Synk \u00b7 v2.0.4",
+  "onboarding.step": "Step 1 of 4",
+  "onboarding.title": "Let\u2019s get to know you.",
+  "onboarding.msg1": "Good evening. I\u2019m here to help you reclaim your evenings.",
+  "onboarding.msg2": "Which app takes most of your time right now?",
+  "onboarding.msg3": "Instagram, mostly in the evening.",
+  "onboarding.msg4": "Got it. How many hours, roughly, per day?",
+  "onboarding.msg5": "Two, sometimes more.",
+  "onboarding.msg6": "And what would you like to do instead?",
+  "onboarding.msg7": "Read, or just do nothing.",
+  "onboarding.msg8": "Perfect. I\u2019ll prepare a custom plan for you. Let\u2019s start tonight.",
+  "onboarding.placeholder": "Write a reply\u2026",
+  "onboarding.done": "Your plan is ready. Welcome to your sanctuary.",
+  "onboarding.start": "See my plan"
 }

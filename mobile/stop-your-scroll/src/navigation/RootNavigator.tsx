@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
 import { LoginScreen } from '../screens/LoginScreen';
+import { OnboardingChatScreen } from '../screens/OnboardingChatScreen';
 import { MainTabsWrapper } from './MainTabs';
 import { HabitDetailScreen } from '../screens/HabitDetailScreen';
 import { PrepBlockScreen } from '../screens/PrepBlockScreen';
@@ -20,6 +21,11 @@ export function RootNavigator() {
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen
+        name="OnboardingChat"
+        component={OnboardingChatScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
       <Stack.Screen name="Main" component={MainTabsWrapper} />
       <Stack.Screen
         name="HabitDetail"

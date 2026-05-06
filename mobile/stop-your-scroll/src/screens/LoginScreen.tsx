@@ -60,7 +60,7 @@ export function LoginScreen({ navigation }: Props) {
             variant="primary"
             fullWidth
             style={styles.cta}
-            onPress={() => navigation.replace('Main')}
+            onPress={() => navigation.replace('OnboardingChat')}
           />
 
           {/* Links */}
