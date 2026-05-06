@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Line, Path, Circle } from 'react-native-svg';
+import Svg, { Line, Path, Circle, Rect } from 'react-native-svg';
 import { tokens } from '../design-system/tokens';
 import { Eye } from '../design-system/components/Eye';
 import { Card } from '../design-system/components/Card';
-import { Bar } from '../design-system/components/Bar';
 import { AppTile } from '../design-system/components/AppTile';
 import { SegSwitch } from '../design-system/components/SegSwitch';
 
@@ -210,6 +209,16 @@ const evoStyles = StyleSheet.create({
 // ── Compare sub-page ──
 function JourneyCompare() {
   const { t } = useTranslation();
+  const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  const currentWeek = [7.1, 6.4, 6.8, 5.9, 6.2, 7.5, 6.6];
+  const selectedWeek = [9.4, 8.8, 9.1, 8.2, 8.7, 10.1, 9.0];
+  const chartW = 140;
+  const chartH = 78;
+  const chartMax = 11;
+  const groupW = chartW / days.length;
+  const barW = 4.8;
+  const barY = (value: number) => chartH - (value / chartMax) * chartH;
+  const barH = (value: number) => (value / chartMax) * chartH;
 
   const appRows = [
     { name: 'Picgram', letter: 'i', tone: 'a' as const, trend: 'plus calme', positive: true },
@@ -231,21 +240,79 @@ function JourneyCompare() {
         <Text style={cmpStyles.range}>{t('journey.cmpRange')}</Text>
       </View>
 
-      {/* Delta card */}
+      {/* Compare chart */}
       <View style={cmpStyles.section}>
-        <Card>
-          <Eye>{t('journey.cmpScreenTime')}</Eye>
-          <Text style={cmpStyles.deltaHeadline}>Cette semaine est plus légère.</Text>
-          <View style={{ marginTop: 16, gap: 8 }}>
-            <View style={cmpStyles.barRow}>
-              <Text style={[cmpStyles.barLabel, { color: tokens.color.faint }]}>avant</Text>
-              <View style={{ flex: 1 }}><Bar value={0.88} height={6} /></View>
+        <Card padded={false}>
+          <View style={cmpStyles.chartHeader}>
+            <Eye action="S 15">{t('journey.cmpScreenTime')}</Eye>
+            <Text style={cmpStyles.deltaHeadline}>Cette semaine est plus légère.</Text>
+          </View>
+
+          <View style={cmpStyles.weekPicker}>
+            <Text style={cmpStyles.weekPickerText}>Comparée à la semaine du 6 avril</Text>
+          </View>
+
+          <View style={cmpStyles.compareChart}>
+            <Svg
+              viewBox={`0 0 ${chartW} ${chartH}`}
+              width="100%"
+              height="100%"
+              preserveAspectRatio="none"
+            >
+              {[0.25, 0.5, 0.75].map((p, i) => (
+                <Line
+                  key={i}
+                  x1={0}
+                  x2={chartW}
+                  y1={chartH * p}
+                  y2={chartH * p}
+                  stroke={tokens.color.line}
+                  strokeWidth={0.35}
+                />
+              ))}
+              {days.map((_, i) => {
+                const x = i * groupW + groupW / 2;
+                return (
+                  <React.Fragment key={i}>
+                    <Rect
+                      x={x - barW - 1}
+                      y={barY(selectedWeek[i])}
+                      width={barW}
+                      height={barH(selectedWeek[i])}
+                      rx={1.2}
+                      fill={tokens.color.fill}
+                    />
+                    <Rect
+                      x={x + 1}
+                      y={barY(currentWeek[i])}
+                      width={barW}
+                      height={barH(currentWeek[i])}
+                      rx={1.2}
+                      fill={tokens.color.primary}
+                    />
+                  </React.Fragment>
+                );
+              })}
+            </Svg>
+          </View>
+
+          <View style={cmpStyles.dayLabels}>
+            {days.map((d, i) => (
+              <Text key={i} style={cmpStyles.dayLabel}>{d}</Text>
+            ))}
+          </View>
+
+          <View style={cmpStyles.legendRow}>
+            <View style={cmpStyles.legendItem}>
+              <View style={[cmpStyles.legendDot, { backgroundColor: tokens.color.primary }]} />
+              <Text style={cmpStyles.legendText}>Cette semaine</Text>
             </View>
-            <View style={cmpStyles.barRow}>
-              <Text style={[cmpStyles.barLabel, { color: tokens.color.fg, fontWeight: '600' }]}>maintenant</Text>
-              <View style={{ flex: 1 }}><Bar value={0.72} height={6} /></View>
+            <View style={cmpStyles.legendItem}>
+              <View style={[cmpStyles.legendDot, { backgroundColor: tokens.color.fill }]} />
+              <Text style={cmpStyles.legendText}>Semaine S 2</Text>
             </View>
           </View>
+
           <Text style={cmpStyles.deltaSummary}>
             <Text style={{ fontStyle: 'italic' }}>{t('journey.cmpDeltaPre')}</Text>{' '}
             <Text style={{ color: tokens.color.sub }}>{t('journey.cmpDeltaPost')}</Text>
@@ -308,6 +375,10 @@ const cmpStyles = StyleSheet.create({
     color: tokens.color.sub,
     marginTop: 6,
   },
+  chartHeader: {
+    paddingHorizontal: 18,
+    paddingTop: 18,
+  },
   deltaHeadline: {
     fontFamily: tokens.font.sans,
     fontSize: 20,
@@ -315,19 +386,64 @@ const cmpStyles = StyleSheet.create({
     color: tokens.color.fg,
     marginTop: 14,
   },
-  barRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+  weekPicker: {
+    marginHorizontal: 18,
+    marginTop: 12,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    borderWidth: tokens.border.hairline,
+    borderColor: tokens.color.line,
+    borderRadius: tokens.radius.sm,
+    backgroundColor: tokens.color.fill,
   },
-  barLabel: {
-    width: 74,
+  weekPickerText: {
+    fontFamily: tokens.font.sans,
+    fontSize: 12,
+    color: tokens.color.sub,
+  },
+  compareChart: {
+    height: 168,
+    marginHorizontal: 14,
+    marginTop: 16,
+  },
+  dayLabels: {
+    marginHorizontal: 14,
+    marginTop: 6,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  dayLabel: {
+    flex: 1,
+    textAlign: 'center',
     fontFamily: tokens.font.sans,
     fontSize: 10,
-    letterSpacing: 0.4,
+    color: tokens.color.faint,
+  },
+  legendRow: {
+    flexDirection: 'row',
+    gap: 14,
+    paddingHorizontal: 18,
+    paddingTop: 14,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+  },
+  legendDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 999,
+  },
+  legendText: {
+    fontFamily: tokens.font.sans,
+    fontSize: 11.5,
+    color: tokens.color.sub,
   },
   deltaSummary: {
-    marginTop: 16,
+    paddingHorizontal: 18,
+    paddingTop: 14,
+    paddingBottom: 18,
     fontFamily: tokens.font.sans,
     fontSize: 13,
     color: tokens.color.fg,

@@ -134,7 +134,7 @@
   "journey.cmpPrev": "S-1",
   "journey.cmpThisWeek": "cette semaine",
   "journey.cmpDeltaPre": "− 2 h 04",
-  "journey.cmpDeltaPost": "de moins sur les écrans cette semaine.",
+  "journey.cmpDeltaPost": "de moins sur les écrans par rapport à la semaine S-2",
   "journey.cmpByApp": "Par application",
   "journey.cmpHabits": "Bonnes habitudes",
   "journey.cmpEvenings": "Soirs sans scroll",
