@@ -218,5 +218,6 @@
   "onboarding.msg8": "Perfect. I\u2019ll prepare a custom plan for you. Let\u2019s start tonight.",
   "onboarding.placeholder": "Write a reply\u2026",
   "onboarding.done": "Your plan is ready. Welcome to your sanctuary.",
-  "onboarding.start": "See my plan"
+  "onboarding.start": "See my plan",
+  "onboarding.skip": "Skip"
 }

@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stop Your Scroll — Présentation du logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #0A0907; font-family: 'Inter', system-ui, sans-serif; color: #EFEAE0; }
+  * { box-sizing: border-box; }
+  :root {
+    --surface: #0A0907;
+    --card: #15120E;
+    --line: rgba(239,234,224,0.10);
+    --line-strong: rgba(239,234,224,0.18);
+    --fg: #EFEAE0;
+    --sub: rgba(239,234,224,0.58);
+    --faint: rgba(239,234,224,0.34);
+    --warm: #C9A57A;
+    --paper: #FBF7EF;
+    --ink: #1F1B16;
+    --display: 'Fraunces', Georgia, serif;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 80px 56px 120px; }
+  .eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--sub); font-weight: 500; }
+  .h1 { font-family: var(--display); font-size: 56px; line-height: 1.05; letter-spacing: -1.4px; margin: 18px 0 0; font-weight: 400; }
+  .h1 i { font-style: italic; color: var(--sub); }
+  .h2 { font-family: var(--display); font-size: 32px; line-height: 1.15; letter-spacing: -0.6px; margin: 0; font-weight: 400; }
+  .h3 { font-family: var(--display); font-size: 22px; line-height: 1.2; letter-spacing: -0.3px; margin: 0; font-weight: 400; font-style: italic; }
+  .lead { font-size: 16px; color: var(--sub); line-height: 1.6; max-width: 620px; }
+  .body { font-size: 14px; color: var(--sub); line-height: 1.65; }
+  .body strong { color: var(--fg); font-weight: 500; }
+
+  .section { margin-top: 96px; }
+  .section-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 28px; }
+  .section-num { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--faint); }
+
+  .stage { background: var(--card); border: 0.5px solid var(--line); border-radius: 22px; padding: 64px; display: flex; align-items: center; justify-content: center; min-height: 420px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+  .card { background: var(--card); border: 0.5px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; }
+  .card.center { align-items: center; justify-content: center; min-height: 220px; }
+  .card.tall { min-height: 280px; }
+  .card .label { font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--faint); font-weight: 500; margin-bottom: 10px; }
+  .card .name { font-family: var(--display); font-style: italic; font-size: 14px; color: var(--sub); margin-top: auto; }
+
+  .swatch-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .swatch { border-radius: 14px; padding: 18px; min-height: 130px; display: flex; flex-direction: column; justify-content: space-between; border: 0.5px solid var(--line); }
+  .swatch .hex { font-family: 'Inter'; font-size: 11px; letter-spacing: 0.4px; }
+  .swatch .role { font-family: var(--display); font-style: italic; font-size: 14px; }
+
+  .anatomy-grid { position: relative; width: 100%; max-width: 480px; aspect-ratio: 1; }
+  .anatomy-grid svg { width: 100%; height: 100%; }
+  .anatomy-callout { position: absolute; font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--warm); }
+
+  .principle { padding: 22px 0; border-top: 0.5px solid var(--line); display: grid; grid-template-columns: 80px 1fr; gap: 24px; }
+  .principle:first-child { border-top: none; padding-top: 0; }
+  .principle .num { font-family: var(--display); font-style: italic; font-size: 28px; color: var(--faint); }
+  .principle h3 { font-family: var(--display); font-size: 18px; margin: 0 0 6px; letter-spacing: -0.2px; font-weight: 400; }
+  .principle p { font-size: 13.5px; color: var(--sub); line-height: 1.6; margin: 0; max-width: 540px; }
+
+  .footer { margin-top: 120px; padding-top: 28px; border-top: 0.5px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; color: var(--faint); letter-spacing: 0.4px; }
+
+  /* The S */
+  .S-svg { display: block; overflow: visible; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ─────────── HERO ─────────── -->
+  <header>
+    <div class="eyebrow">Stop your scroll · identité visuelle · v1</div>
+    <h1 class="h1">Le S<br/><i>qui se prépare à glisser.</i></h1>
+    <p class="lead" style="margin-top: 24px;">
+      Une seule lettre, en italique. Et derrière elle, deux fantômes décalés vers le bas — l'instant juste avant que le doigt ne descende. Le logo capture cette tension, et choisit de ne pas la suivre.
+    </p>
+  </header>
+
+  <div class="stage" style="margin-top: 56px; min-height: 520px;">
+    <svg class="S-svg" width="380" height="380" viewBox="0 0 100 100">
+      <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="400" font-size="96" fill="#EFEAE0" opacity="0.30" transform="translate(0, 23)">s</text>
+      <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="400" font-size="96" fill="#EFEAE0" opacity="0.55" transform="translate(0, 11.5)">s</text>
+      <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="400" font-size="96" fill="#EFEAE0">s</text>
+    </svg>
+  </div>
+
+  <!-- ─────────── 01 · IDÉE ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="h2">L'idée</h2>
+    </div>
+    <p class="body" style="max-width: 720px;">
+      Le scroll est un mouvement vertical descendant. Il commence imperceptiblement — un battement de pouce, et la page coule. <strong>Stop your scroll</strong> intervient à ce moment précis : avant la chute. Le logo le montre littéralement. Le « s » principal est posé, net. Derrière lui, deux échos de plus en plus fantomatiques glissent vers le bas — figés. Une animation suspendue. <strong>Le geste qu'on choisit de ne pas finir.</strong>
+    </p>
+  </section>
+
+  <!-- ─────────── 02 · ANATOMIE ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="h2">Anatomie</h2>
+    </div>
+    <div class="grid-2" style="gap: 24px;">
+      <div class="card tall" style="align-items: center; justify-content: center; padding: 40px;">
+        <div class="anatomy-grid">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+            <!-- grid -->
+            <g stroke="rgba(239,234,224,0.08)" stroke-width="0.15">
+              <line x1="0" y1="22" x2="100" y2="22" />
+              <line x1="0" y1="50" x2="100" y2="50" />
+              <line x1="0" y1="78" x2="100" y2="78" />
+              <line x1="20" y1="0" x2="20" y2="100" />
+              <line x1="80" y1="0" x2="80" y2="100" />
+            </g>
+            <!-- baseline / cap markers -->
+            <line x1="14" y1="20" x2="86" y2="20" stroke="#C9A57A" stroke-width="0.15" stroke-dasharray="0.8 0.8" />
+            <line x1="14" y1="80" x2="86" y2="80" stroke="#C9A57A" stroke-width="0.15" stroke-dasharray="0.8 0.8" />
+            <!-- ghosts -->
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="86" fill="#EFEAE0" opacity="0.30" transform="translate(0, 21)">s</text>
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="86" fill="#EFEAE0" opacity="0.55" transform="translate(0, 10.5)">s</text>
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="86" fill="#EFEAE0">s</text>
+          </svg>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; justify-content: center; gap: 14px;">
+        <div style="display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding-bottom: 14px; border-bottom: 0.5px solid var(--line);">
+          <div class="eyebrow">Glyph</div>
+          <div class="body" style="margin: 0; color: var(--fg);">Fraunces italic, lowercase « s »</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding-bottom: 14px; border-bottom: 0.5px solid var(--line);">
+          <div class="eyebrow">Fantômes</div>
+          <div class="body" style="margin: 0; color: var(--fg);">2 copies décalées, opacités 55 % puis 30 %</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding-bottom: 14px; border-bottom: 0.5px solid var(--line);">
+          <div class="eyebrow">Écart</div>
+          <div class="body" style="margin: 0; color: var(--fg);">11,5 % de la hauteur entre chaque fantôme</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding-bottom: 14px; border-bottom: 0.5px solid var(--line);">
+          <div class="eyebrow">Atténuation</div>
+          <div class="body" style="margin: 0; color: var(--fg);">Décroissance de 0,45 par étage</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding-bottom: 14px; border-bottom: 0.5px solid var(--line);">
+          <div class="eyebrow">Direction</div>
+          <div class="body" style="margin: 0; color: var(--fg);">Vertical descendant uniquement</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 110px 1fr; gap: 14px;">
+          <div class="eyebrow">Réserve</div>
+          <div class="body" style="margin: 0; color: var(--fg);">Un fantôme de hauteur tout autour</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 03 · PRINCIPES ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="h2">Principes</h2>
+    </div>
+    <div>
+      <div class="principle">
+        <div class="num">i.</div>
+        <div>
+          <h3>Une seule lettre. Toujours.</h3>
+          <p>Le logo n'est jamais entouré d'iconographie, d'ornement ou de cadre superflu. Le « s » et ses fantômes suffisent. Tout ajout dilue le geste.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">ii.</div>
+        <div>
+          <h3>Le mouvement est figé.</h3>
+          <p>Les fantômes sont statiques sur les supports imprimés et l'identité. Ils ne s'animent que sur le splash de l'application — et seulement à l'ouverture, pour disparaître ensuite.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">iii.</div>
+        <div>
+          <h3>Toujours italique, toujours sérif.</h3>
+          <p>L'italique fait l'élan ; le sérif lui donne du poids. Une version droite ou sans-sérif n'existe pas. Si une situation les exige, on change de famille mais jamais de posture.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">iv.</div>
+        <div>
+          <h3>Une seule couleur d'accent.</h3>
+          <p>Cream sur sombre, ink sur papier. Le warm <span style="color: var(--warm);">#C9A57A</span> est strictement réservé aux états d'alerte (dépassement, mode urgence). Aucune autre teinte n'entre dans le système.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 04 · TYPOGRAPHIE ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="h2">Typographie</h2>
+    </div>
+    <div class="grid-2" style="gap: 16px;">
+      <div class="card" style="padding: 32px;">
+        <div class="label">Display</div>
+        <div style="font-family: var(--display); font-style: italic; font-size: 64px; line-height: 1; letter-spacing: -1.4px; margin-top: 12px;">Fraunces</div>
+        <div class="body" style="margin-top: 12px;">Pour le logo, les titres et les chiffres ronds. Italique opsz variable. Une seule famille pour toute l'identité.</div>
+      </div>
+      <div class="card" style="padding: 32px;">
+        <div class="label">Texte</div>
+        <div style="font-family: 'Inter'; font-size: 60px; line-height: 1; letter-spacing: -1.6px; margin-top: 12px; font-weight: 500;">Inter</div>
+        <div class="body" style="margin-top: 12px;">Pour le corps, l'UI, les libellés. Régulier 400, médium 500. Jamais en italique — le sérif s'en charge.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 05 · COULEURS ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="h2">Palette</h2>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch" style="background: #0A0907; color: #EFEAE0;">
+        <div class="role">Surface</div>
+        <div class="hex">#0A0907</div>
+      </div>
+      <div class="swatch" style="background: #EFEAE0; color: #1F1B16; border-color: rgba(31,27,22,0.08);">
+        <div class="role">Cream</div>
+        <div class="hex">#EFEAE0</div>
+      </div>
+      <div class="swatch" style="background: #FBF7EF; color: #1F1B16; border-color: rgba(31,27,22,0.08);">
+        <div class="role">Paper</div>
+        <div class="hex">#FBF7EF</div>
+      </div>
+      <div class="swatch" style="background: #C9A57A; color: #0A0907; border-color: rgba(10,9,7,0.10);">
+        <div class="role">Warm · alerte</div>
+        <div class="hex">#C9A57A</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 06 · DÉCLINAISONS ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2 class="h2">Déclinaisons</h2>
+    </div>
+
+    <div class="grid-3" style="gap: 16px;">
+      <!-- mark cream / dark -->
+      <div class="card center tall" style="background: #0A0907;">
+        <div class="label">Primaire · sombre</div>
+        <svg width="160" height="180" viewBox="0 0 100 100" style="display:block; overflow: visible;">
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.30" transform="translate(0, 23)">s</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.55" transform="translate(0, 11.5)">s</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0">s</text>
+        </svg>
+        <div class="name" style="color: var(--sub);">Cream sur surface</div>
+      </div>
+      <!-- mark ink / paper -->
+      <div class="card center tall" style="background: #FBF7EF; border-color: rgba(31,27,22,0.08);">
+        <div class="label" style="color: rgba(31,27,22,0.5);">Inversé · papier</div>
+        <svg width="160" height="180" viewBox="0 0 100 100" style="display:block; overflow: visible;">
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#1F1B16" opacity="0.30" transform="translate(0, 23)">s</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#1F1B16" opacity="0.55" transform="translate(0, 11.5)">s</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#1F1B16">s</text>
+        </svg>
+        <div class="name" style="color: rgba(31,27,22,0.55); font-style: italic;">Ink sur paper</div>
+      </div>
+      <!-- mark warm -->
+      <div class="card center tall" style="background: #15120E;">
+        <div class="label" style="color: rgba(201,165,122,0.7);">Alerte · usage rare</div>
+        <svg width="160" height="180" viewBox="0 0 100 100" style="display:block; overflow: visible;">
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#C9A57A" opacity="0.30" transform="translate(0, 23)">s</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#C9A57A" opacity="0.55" transform="translate(0, 11.5)">s</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#C9A57A">s</text>
+        </svg>
+        <div class="name" style="color: var(--warm); font-style: italic;">Warm — dépassement</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 07 · APP ICON ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <h2 class="h2">App icon</h2>
+    </div>
+    <div class="card" style="padding: 48px; align-items: center;">
+      <div style="display: flex; align-items: flex-end; gap: 32px;">
+        <div style="width: 200px; height: 200px; border-radius: 44px; background: #EFEAE0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <svg width="160" height="160" viewBox="0 0 100 100">
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#0A0907" opacity="0.30" transform="translate(0, 23)">s</text>
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#0A0907" opacity="0.55" transform="translate(0, 11.5)">s</text>
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#0A0907">s</text>
+          </svg>
+        </div>
+        <div style="width: 96px; height: 96px; border-radius: 22px; background: #EFEAE0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <svg width="76" height="76" viewBox="0 0 100 100">
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#0A0907" opacity="0.40" transform="translate(0, 13)">s</text>
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#0A0907">s</text>
+          </svg>
+        </div>
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: #EFEAE0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <svg width="36" height="36" viewBox="0 0 100 100">
+            <text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#0A0907">s</text>
+          </svg>
+        </div>
+      </div>
+      <div class="body" style="margin-top: 28px; text-align: center; max-width: 480px;">
+        <strong>1024 px · 180 px · 60 px.</strong> Sous 32 px, on retombe à un seul s — la lisibilité passe avant le mouvement.
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 08 · USAGES ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <h2 class="h2">Min-size · 16 → 96 px</h2>
+    </div>
+    <div class="card" style="padding: 48px; align-items: center;">
+      <div style="display: flex; align-items: flex-end; gap: 40px;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <svg width="16" height="16" viewBox="0 0 100 100"><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0">s</text></svg>
+          <div style="font-size: 10px; color: var(--faint); letter-spacing: 0.4px;">16</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <svg width="22" height="22" viewBox="0 0 100 100"><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.5" transform="translate(0,11.5)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0">s</text></svg>
+          <div style="font-size: 10px; color: var(--faint); letter-spacing: 0.4px;">22</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <svg width="40" height="40" viewBox="0 0 100 100"><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.30" transform="translate(0, 23)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.55" transform="translate(0, 11.5)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0">s</text></svg>
+          <div style="font-size: 10px; color: var(--faint); letter-spacing: 0.4px;">40</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <svg width="64" height="64" viewBox="0 0 100 100"><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.30" transform="translate(0, 23)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.55" transform="translate(0, 11.5)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0">s</text></svg>
+          <div style="font-size: 10px; color: var(--faint); letter-spacing: 0.4px;">64</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <svg width="96" height="96" viewBox="0 0 100 100"><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.30" transform="translate(0, 23)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0" opacity="0.55" transform="translate(0, 11.5)">s</text><text x="50" y="74" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="96" fill="#EFEAE0">s</text></svg>
+          <div style="font-size: 10px; color: var(--faint); letter-spacing: 0.4px;">96</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 09 · CLOSING ─────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">09</span>
+      <h2 class="h2">Et c'est tout.</h2>
+    </div>
+    <p class="body" style="max-width: 620px;">
+      La marque tient sur cette image — un s posé, deux échos suspendus. Pas de slogan, pas d'ornement. Le geste se suffit. Le reste de l'identité (UI, illustrations, plans de communication) découle de cette même retenue.
+    </p>
+  </section>
+
+  <footer class="footer">
+    <span>Stop your scroll · présentation du logo · v1</span>
+    <span>Mai 2026</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -218,5 +218,6 @@
   "onboarding.msg8": "Parfait. Je vais te pr\u00e9parer un plan sur mesure. On commence ce soir.",
   "onboarding.placeholder": "\u00c9cris une r\u00e9ponse\u2026",
   "onboarding.done": "Ton plan est pr\u00eat. Bienvenue dans ton sanctuaire.",
-  "onboarding.start": "D\u00e9couvrir mon plan"
+  "onboarding.start": "D\u00e9couvrir mon plan",
+  "onboarding.skip": "Passer"
 }

@@ -11,6 +11,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     Inter: require('./assets/fonts/Inter-Regular.ttf'),
     KronaOne: require('./assets/fonts/KronaOne-Regular.ttf'),
+    'Fraunces-Italic': require('./assets/fonts/Fraunces-Italic.ttf'),
   });
 
   if (!fontsLoaded) {

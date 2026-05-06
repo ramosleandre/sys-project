@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import { tokens } from '../design-system/tokens';
+import { BrandLogo } from '../design-system/components/BrandLogo';
 
 type Props = { navigation: { replace: (s: string) => void } };
 type Message = { from: 'sys' | 'me'; textKey: string };
@@ -124,7 +125,15 @@ export function OnboardingChatScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={st.safe}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        {/* Header */}
         <View style={st.header}>
+          <View style={st.headerTop}>
+            <View style={{ width: 50 }} />
+            <BrandLogo size={36} />
+            <Pressable onPress={() => navigation.replace('Main')} hitSlop={12}>
+              <Text style={st.skip}>{t('onboarding.skip')}</Text>
+            </Pressable>
+          </View>
           <Text style={st.stepLabel}>{t('onboarding.step')}</Text>
           <Text style={st.title}>{t('onboarding.title')}</Text>
         </View>
@@ -159,7 +168,9 @@ export function OnboardingChatScreen({ navigation }: Props) {
 
 const st = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#0F0D0A' },
-  header: { paddingHorizontal: 24, paddingTop: 18, paddingBottom: 14, borderBottomWidth: 0.5, borderBottomColor: '#231F1A' },
+  header: { paddingHorizontal: 24, paddingTop: 14, paddingBottom: 14, borderBottomWidth: 0.5, borderBottomColor: '#231F1A' },
+  headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
+  skip: { fontFamily: tokens.font.sans, fontSize: 13, color: '#8A8275', width: 50, textAlign: 'right' },
   stepLabel: { fontFamily: tokens.font.sans, fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: '#8A8275', fontWeight: '500' },
   title: { fontFamily: tokens.font.sans, fontSize: 24, lineHeight: 24 * 1.15, letterSpacing: -0.4, color: '#EDE4D5', marginTop: 6 },
   messages: { flex: 1 },
