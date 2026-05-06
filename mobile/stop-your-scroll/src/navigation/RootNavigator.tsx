@@ -8,6 +8,7 @@ import { HabitDetailScreen } from '../screens/HabitDetailScreen';
 import { PrepBlockScreen } from '../screens/PrepBlockScreen';
 import { OverLimitScreen } from '../screens/OverLimitScreen';
 import { UnblockScreen } from '../screens/UnblockScreen';
+import { HabitChatScreen } from '../screens/HabitChatScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,6 +46,11 @@ export function RootNavigator() {
       <Stack.Screen
         name="Unblock"
         component={UnblockScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="HabitChat"
+        component={HabitChatScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>

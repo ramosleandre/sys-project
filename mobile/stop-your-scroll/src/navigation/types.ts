@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Login: undefined;
   OnboardingChat: undefined;
+  HabitChat: { habitName: string };
   Main: undefined;
   HabitDetail: undefined;
   PrepBlock: undefined;

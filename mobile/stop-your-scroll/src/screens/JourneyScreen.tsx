@@ -226,7 +226,7 @@ function JourneyCompare() {
     positive: boolean;
   }[] = [
     { name: 'Instagram', logoSource: require('../../assets/apps/Instagram_icon.png'), trend: 'plus calme', positive: true },
-    { name: 'Tiktok', logoSource: require('../../assets/apps/tiktok.webp'), trend: 'net recul', positive: true },
+    { name: 'TikTok', logoSource: require('../../assets/apps/tiktok.webp'), trend: 'net recul', positive: true },
     { name: 'Snapchat', logoSource: require('../../assets/apps/Snapchat.png'), trend: 'à surveiller', positive: false },
   ];
 
