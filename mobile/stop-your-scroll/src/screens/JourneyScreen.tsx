@@ -44,10 +44,17 @@ function JourneyEvolution() {
 
       {/* Chart */}
       <View style={evoStyles.section}>
-        <Card>
-          <Eye>{t('journey.chartTitle')}</Eye>
-          <View style={{ marginTop: 16 }}>
-            <Svg viewBox={`0 0 ${w} ${h + 14}`} width="100%" height={160}>
+        <Card padded={false}>
+          <View style={evoStyles.chartHeader}>
+            <Eye>{t('journey.chartTitle')}</Eye>
+          </View>
+          <View style={evoStyles.chartFrame}>
+            <Svg
+              viewBox={`0 0 ${w} ${h + 14}`}
+              width="100%"
+              height="100%"
+              preserveAspectRatio="none"
+            >
               {[0.25, 0.5, 0.75].map((p, i) => (
                 <Line key={i} x1={0} x2={w} y1={h * p} y2={h * p} stroke={tokens.color.line} strokeWidth={0.3} />
               ))}
@@ -114,9 +121,19 @@ const evoStyles = StyleSheet.create({
     marginTop: 10,
     lineHeight: 13 * 1.55,
   },
+  chartHeader: {
+    paddingHorizontal: 18,
+    paddingTop: 18,
+  },
+  chartFrame: {
+    height: 178,
+    marginTop: 12,
+    marginHorizontal: 12,
+    overflow: 'hidden',
+  },
   goalLabel: {
     position: 'absolute',
-    right: 0,
+    right: 18,
     top: -2,
     fontFamily: tokens.font.sans,
     fontSize: 9.5,
@@ -127,7 +144,9 @@ const evoStyles = StyleSheet.create({
     fontFamily: tokens.font.sans,
     fontSize: 12.5,
     color: tokens.color.sub,
-    marginTop: 10,
+    paddingHorizontal: 18,
+    marginTop: -20,
+    paddingBottom: 18,
     lineHeight: 12.5 * 1.5,
   },
   projTitle: {
