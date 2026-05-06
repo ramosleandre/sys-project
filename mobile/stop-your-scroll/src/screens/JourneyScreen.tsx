@@ -392,5 +392,6 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     color: tokens.color.sub,
     fontWeight: '500',
+    paddingBottom: 10,
   },
 });
