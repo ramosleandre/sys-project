@@ -133,16 +133,22 @@ export function PlanMgmtScreen({ navigation }: Props) {
           ))}
         </View>
 
-        {/* Apps bloquées */}
+        {/* Catégories */}
         <View style={{ paddingHorizontal: 22, paddingTop: 22 }}>
-          <Eye>{t('habit.appsBlocked')}</Eye>
-          <Pressable onPress={() => navigation.navigate('BlockedApps')} style={s.categoryRow}>
-            <View style={s.categoryBadge}>
-              <Text style={s.categoryIcon}>📱</Text>
-            </View>
+          <Eye>{t('plan.categories')}</Eye>
+          <Pressable style={s.categoryRow}>
+            <View style={s.categoryBadge}><Text style={s.categoryIcon}>📱</Text></View>
             <View style={{ flex: 1 }}>
-              <Text style={s.habitTitle}>{t('plan.appsCategory')}</Text>
+              <Text style={s.habitTitle}>{t('plan.categorySocial')}</Text>
               <Text style={s.habitSched}>Instagram, TikTok, Snapchat</Text>
+            </View>
+            <Text style={s.chevron}>›</Text>
+          </Pressable>
+          <Pressable style={s.categoryRow}>
+            <View style={s.categoryBadge}><Text style={s.categoryIcon}>🎮</Text></View>
+            <View style={{ flex: 1 }}>
+              <Text style={s.habitTitle}>{t('plan.categoryGames')}</Text>
+              <Text style={s.habitSched}>Brawl Stars, Clash Royale</Text>
             </View>
             <Text style={s.chevron}>›</Text>
           </Pressable>
@@ -152,7 +158,7 @@ export function PlanMgmtScreen({ navigation }: Props) {
       </ScrollView>
 
       <View style={s.bottomCta}>
-        <Button label={t('plan.editPlan')} variant="primary" fullWidth />
+        <Button label={t('plan.editPlan')} variant="primary" fullWidth onPress={() => navigation.navigate('EditPlan')} />
       </View>
     </SafeAreaView>
   );

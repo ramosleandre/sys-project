@@ -2,18 +2,24 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Svg, { Circle as SvgCircle } from 'react-native-svg';
 import { tokens } from '../design-system/tokens';
+import { Numeric } from '../design-system/components/Numeric';
 import { Button } from '../design-system/components/Button';
-import { Card } from '../design-system/components/Card';
-import { RootStackParamList } from '../navigation/types';
 
 type Props = {
-  navigation: NativeStackNavigationProp<RootStackParamList>;
+  navigation: { goBack: () => void; navigate: (s: string) => void };
 };
 
 export function OverLimitScreen({ navigation }: Props) {
   const { t } = useTranslation();
+
+  const used = 7.23;
+  const limit = 6;
+  const pct = Math.min(used / limit, 1);
+  const r = 80;
+  const circ = 2 * Math.PI * r;
+
   const apps = [
     { name: 'TikTok', time: '3 h 40', main: true },
     { name: 'Instagram', time: '2 h 10' },
@@ -21,142 +27,78 @@ export function OverLimitScreen({ navigation }: Props) {
   ];
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <Pressable onPress={() => navigation.goBack()} style={styles.topKicker}>
-        <Text style={styles.backArrow}>‹</Text>
-        <Text style={styles.kicker}>{t('over.kicker').toUpperCase()}</Text>
+    <SafeAreaView style={s.safe}>
+      {/* Back */}
+      <Pressable onPress={() => navigation.goBack()} style={s.backBtn}>
+        <Text style={s.backArrow}>‹</Text>
       </Pressable>
 
-      <View style={styles.content}>
-        <Text style={styles.heroTitle}>Limite dépassée.</Text>
-        <Text style={styles.body}>Tu as dépassé ton temps prévu aujourd’hui. Les réseaux restent coupés pour t’aider à décrocher.</Text>
-
-        {/* <Card style={styles.statusCard}>
-          <Text style={styles.statusLabel}>État</Text>
-          <Text style={styles.statusTitle}>Réseaux bloqués</Text>
-          <Text style={styles.statusBody}>Tu peux laisser le blocage actif, ou passer par le mode urgence.</Text>
-        </Card> */}
-
-        <Card style={styles.appSummaryCard}>
-          <Text style={styles.statusLabel}>Résumé</Text>
-          <View style={styles.appRows}>
-            {apps.map(app => (
-              <View key={app.name} style={styles.appRow}>
-                <Text style={styles.appName}>{app.name}</Text>
-                <Text style={[styles.appTime, app.main && styles.appTimeMain]}>{app.time}</Text>
-              </View>
-            ))}
+      {/* Center */}
+      <View style={s.center}>
+        {/* Ring */}
+        <View style={{ width: 180, height: 180 }}>
+          <Svg width={180} height={180} viewBox="0 0 180 180">
+            <SvgCircle cx={90} cy={90} r={r} fill="none" stroke={tokens.color.line} strokeWidth={2.5} />
+            <SvgCircle
+              cx={90} cy={90} r={r} fill="none"
+              stroke={tokens.color.warm} strokeWidth={2.5}
+              strokeDasharray={`${pct * circ} ${circ}`}
+              strokeLinecap="round" rotation={-90} origin="90,90"
+            />
+          </Svg>
+          <View style={s.ringInner}>
+            <Numeric size={36} color={tokens.color.warm}>7h14</Numeric>
+            <Text style={s.ringLimit}>/ {limit}h</Text>
           </View>
-        </Card>
+        </View>
+
+        <Text style={s.headline}>Limite dépassée.</Text>
+        <Text style={s.sub}>{t('over.body')}</Text>
+
+        {/* App breakdown */}
+        <View style={s.appList}>
+          {apps.map(app => (
+            <View key={app.name} style={s.appRow}>
+              <Text style={s.appName}>{app.name}</Text>
+              <Text style={[s.appTime, app.main && { color: tokens.color.warm }]}>{app.time}</Text>
+            </View>
+          ))}
+        </View>
       </View>
 
-      {/* Bottom buttons */}
-      <View style={styles.bottomCta}>
-        <Button
-          label={t('over.accept')}
-          variant="primary"
-          fullWidth
-          onPress={() => navigation.goBack()}
-        />
-        <Button
-          label={t('over.emergency')}
-          variant="warm"
-          fullWidth
-          onPress={() => navigation.navigate('Unblock')}
-        />
+      {/* Bottom */}
+      <View style={s.bottom}>
+        <Button label={t('over.accept')} variant="primary" fullWidth onPress={() => navigation.goBack()} />
+        <Pressable onPress={() => navigation.navigate('Unblock')} style={s.emergencyBtn}>
+          <Text style={s.emergencyText}>{t('over.emergency')}</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: tokens.color.surface },
-  topKicker: { paddingHorizontal: 24, paddingTop: 20, flexDirection: 'row', alignItems: 'center', gap: 10 },
-  backArrow: { color: tokens.color.sub, fontSize: 18, lineHeight: 20 },
-  kicker: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    letterSpacing: 2,
-    color: tokens.color.warm,
-    fontWeight: '500',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 22,
-  },
-  heroTitle: {
-    fontFamily: tokens.font.sans,
-    fontSize: 36,
-    lineHeight: 36 * 1.08,
-    letterSpacing: -0.8,
-    color: tokens.color.fg,
-  },
-  body: {
-    fontFamily: tokens.font.sans,
-    fontSize: 14,
-    color: tokens.color.sub,
-    lineHeight: 14 * 1.55,
-    marginTop: 16,
-  },
-  statusCard: {
-    marginTop: 24,
-  },
-  statusLabel: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    color: tokens.color.warm,
-    letterSpacing: 1.3,
-    textTransform: 'uppercase',
-    fontWeight: '500',
-  },
-  statusTitle: {
-    fontFamily: tokens.font.sans,
-    fontSize: 19,
-    color: tokens.color.fg,
-    marginTop: 10,
-  },
-  statusBody: {
-    fontFamily: tokens.font.sans,
-    fontSize: 12.5,
-    color: tokens.color.sub,
-    marginTop: 6,
-    lineHeight: 12.5 * 1.55,
-  },
-  appSummaryCard: {
-    marginTop: 20,
-
-  },
-  appRows: {
-    marginTop: 12,
-    gap: 10,
+  backBtn: { position: 'absolute', top: 60, left: 20, zIndex: 10, padding: 8 },
+  backArrow: { color: tokens.color.sub, fontSize: 22, lineHeight: 24 },
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32, gap: 18 },
+  ringInner: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' },
+  ringLimit: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.faint, marginTop: 2 },
+  headline: { fontFamily: tokens.font.sans, fontSize: 22, letterSpacing: -0.4, color: tokens.color.fg, textAlign: 'center', fontWeight: '500' },
+  sub: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.sub, textAlign: 'center', lineHeight: 13 * 1.55, maxWidth: 280 },
+  appList: {
+    alignSelf: 'stretch', marginHorizontal: 8,
+    borderWidth: tokens.border.hairline, borderColor: tokens.color.line, borderRadius: 14,
+    paddingVertical: 4, paddingHorizontal: 18, marginTop: 4,
   },
   appRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: 14,
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+    paddingVertical: 11,
+    borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
   },
-  appName: {
-    fontFamily: tokens.font.sans,
-    fontSize: 13.5,
-    color: tokens.color.fg,
-  },
-  appTime: {
-    fontFamily: tokens.font.sans,
-    fontSize: 13,
-    color: tokens.color.sub,
-    fontStyle: 'italic',
-  },
-  appTimeMain: {
-    color: tokens.color.warm,
-  },
-  bottomCta: {
-    paddingHorizontal: 24,
-    paddingTop: 12,
-    paddingBottom: 28,
-    borderTopWidth: tokens.border.hairline,
-    borderTopColor: tokens.color.line,
-    gap: 10,
-  },
+  appName: { fontFamily: tokens.font.sans, fontSize: 13.5, color: tokens.color.fg },
+  appTime: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.sub, fontStyle: 'italic' },
+  bottom: { paddingHorizontal: 24, paddingTop: 12, paddingBottom: 28, gap: 12 },
+  emergencyBtn: { alignItems: 'center', paddingVertical: 13 },
+  emergencyText: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.warm, letterSpacing: 0.2 },
 });

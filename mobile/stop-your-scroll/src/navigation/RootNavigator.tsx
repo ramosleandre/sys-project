@@ -9,6 +9,7 @@ import { PrepBlockScreen } from '../screens/PrepBlockScreen';
 import { OverLimitScreen } from '../screens/OverLimitScreen';
 import { UnblockScreen } from '../screens/UnblockScreen';
 import { HabitChatScreen } from '../screens/HabitChatScreen';
+import { EditPlanScreen } from '../screens/EditPlanScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -46,6 +47,11 @@ export function RootNavigator() {
       <Stack.Screen
         name="Unblock"
         component={UnblockScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="EditPlan"
+        component={EditPlanScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

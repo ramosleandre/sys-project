@@ -22,13 +22,13 @@ function PenIcon() {
 
 function Pill({ label, active, onPress }: { label: string; active?: boolean; onPress?: () => void }) {
   return (
-    <Pressable onPress={onPress} style={[pill.base, active && pill.active]}>
-      <Text style={[pill.text, active && pill.textActive]}>{label}</Text>
+    <Pressable onPress={onPress} style={[pl.base, active && pl.active]}>
+      <Text style={[pl.text, active && pl.textActive]}>{label}</Text>
     </Pressable>
   );
 }
 
-const pill = StyleSheet.create({
+const pl = StyleSheet.create({
   base: {
     borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
     borderRadius: 999, paddingVertical: 8, paddingHorizontal: 14, backgroundColor: 'transparent',
@@ -38,16 +38,28 @@ const pill = StyleSheet.create({
   textActive: { color: tokens.color.ink },
 });
 
+function Tag({ label }: { label: string }) {
+  return (
+    <View style={tag.base}>
+      <Text style={tag.text}>{label}</Text>
+    </View>
+  );
+}
+
+const tag = StyleSheet.create({
+  base: {
+    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
+    borderRadius: 10, paddingVertical: 8, paddingHorizontal: 14, backgroundColor: tokens.color.fill,
+  },
+  text: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.fg },
+});
+
 export function HabitDetailScreen({ navigation }: Props) {
   const { t } = useTranslation();
   const [habitName, setHabitName] = useState(t('habit.readingFull'));
   const [isEditingName, setIsEditingName] = useState(false);
   const [startDay, setStartDay] = useState('Lun');
   const [endDay, setEndDay] = useState('Dim');
-  const [startTime] = useState('20:50');
-  const [endTime] = useState('23:20');
-  const [category] = useState(t('plan.appsCategory'));
-  const [prep] = useState(t('habitDetail.prepVal'));
 
   const allDays = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 
@@ -65,7 +77,6 @@ export function HabitDetailScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={s.safe} edges={['top']}>
-      {/* Header */}
       <View style={s.headerRow}>
         <Pressable onPress={() => navigation.goBack()} style={s.backRow}>
           <Text style={s.backArrow}>‹</Text>
@@ -77,7 +88,7 @@ export function HabitDetailScreen({ navigation }: Props) {
       </View>
 
       <ScrollView style={s.scroll} showsVerticalScrollIndicator={false}>
-        {/* Editable title */}
+        {/* Title */}
         <View style={s.titleBlock}>
           {isEditingName ? (
             <TextInput
@@ -92,55 +103,48 @@ export function HabitDetailScreen({ navigation }: Props) {
           )}
         </View>
 
-        {/* Config pills — right below title */}
+        {/* Days pills */}
         <View style={s.configSection}>
-          {/* Days */}
           <View style={s.configRow}>
-            <Text style={s.configLabel}>Jours</Text>
-            <View style={s.pillRow}>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }}>
-                {allDays.map(d => (
-                  <Pill
-                    key={d}
-                    label={d}
-                    active={allDays.indexOf(d) >= allDays.indexOf(startDay) && allDays.indexOf(d) <= allDays.indexOf(endDay)}
-                    onPress={() => {
-                      if (d === startDay) return;
-                      if (allDays.indexOf(d) < allDays.indexOf(startDay)) setStartDay(d);
-                      else setEndDay(d);
-                    }}
-                  />
-                ))}
-              </ScrollView>
-            </View>
+            <Text style={s.configLabel}>JOURS</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }}>
+              {allDays.map(d => (
+                <Pill
+                  key={d}
+                  label={d}
+                  active={allDays.indexOf(d) >= allDays.indexOf(startDay) && allDays.indexOf(d) <= allDays.indexOf(endDay)}
+                  onPress={() => {
+                    if (allDays.indexOf(d) < allDays.indexOf(startDay)) setStartDay(d);
+                    else setEndDay(d);
+                  }}
+                />
+              ))}
+            </ScrollView>
           </View>
 
-          {/* Time */}
-          <View style={s.configRow}>
-            <Text style={s.configLabel}>Horaire</Text>
-            <View style={s.tagRow}>
-              <View style={s.tag}><Text style={s.tagText}>{startTime}</Text></View>
-              <Text style={s.tagArrow}>→</Text>
-              <View style={s.tag}><Text style={s.tagText}>{endTime}</Text></View>
+          {/* Horaire + Apps coupées + Préparation — compact row */}
+          <View style={s.infoGrid}>
+            <View style={s.infoItem}>
+              <Text style={s.configLabel}>HORAIRE</Text>
+              <View style={s.tagRow}>
+                <Tag label="20:50" />
+                <Text style={s.tagArrow}>→</Text>
+                <Tag label="23:20" />
+              </View>
             </View>
-          </View>
-
-          {/* Blocked category */}
-          <View style={s.configRow}>
-            <Text style={s.configLabel}>Apps coupées</Text>
-            <View style={s.tagRow}>
-              <View style={s.tag}><Text style={s.tagText}>{category}</Text></View>
+            <View style={s.infoItem}>
+              <Text style={s.configLabel}>APPS COUPÉES</Text>
+              <Tag label={t('plan.appsCategory')} />
             </View>
-          </View>
-
-          {/* Prep */}
-          <View style={s.configRow}>
-            <Text style={s.configLabel}>Préparation</Text>
-            <View style={s.tagRow}>
-              <View style={s.tag}><Text style={s.tagText}>{prep}</Text></View>
+            <View style={s.infoItem}>
+              <Text style={s.configLabel}>PRÉPARATION</Text>
+              <Tag label={t('habitDetail.prepVal')} />
             </View>
           </View>
         </View>
+
+        {/* Separator */}
+        <View style={s.separator} />
 
         {/* Stats */}
         <View style={s.statRow}>
@@ -152,7 +156,7 @@ export function HabitDetailScreen({ navigation }: Props) {
           ))}
         </View>
 
-        {/* Too hard — 3 suggestions + open chat */}
+        {/* Too hard */}
         <View style={s.section}>
           <Card padded={false}>
             <View style={{ padding: 16, paddingHorizontal: 18, paddingBottom: 4 }}>
@@ -176,7 +180,6 @@ export function HabitDetailScreen({ navigation }: Props) {
           </Card>
         </View>
 
-        {/* Danger */}
         <View style={s.danger}>
           <Text style={s.dangerText}>{t('habitDetail.delete')}</Text>
         </View>
@@ -205,19 +208,20 @@ const s = StyleSheet.create({
     lineHeight: 28 * 1.1, letterSpacing: -0.5, color: tokens.color.fg,
     borderBottomWidth: 1, borderBottomColor: tokens.color.lineStrong, paddingBottom: 4, padding: 0,
   },
-  // Config section
-  configSection: { paddingHorizontal: 22, paddingBottom: 16, gap: 14 },
+  configSection: { paddingHorizontal: 22, paddingBottom: 4, gap: 16 },
   configRow: { gap: 8 },
-  configLabel: { fontFamily: tokens.font.sans, fontSize: 10.5, letterSpacing: 1.4, textTransform: 'uppercase', color: tokens.color.faint, fontWeight: '500' },
-  pillRow: { flexDirection: 'row' },
-  tagRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  tag: {
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
-    borderRadius: 10, paddingVertical: 8, paddingHorizontal: 14, backgroundColor: tokens.color.fill,
+  configLabel: {
+    fontFamily: tokens.font.sans, fontSize: 10, letterSpacing: 1.4,
+    color: tokens.color.faint, fontWeight: '500',
   },
-  tagText: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.fg },
+  infoGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
+  infoItem: { gap: 6 },
+  tagRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   tagArrow: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.faint },
-  // Stats
+  separator: {
+    height: tokens.border.hairline, backgroundColor: tokens.color.line,
+    marginHorizontal: 22, marginVertical: 16,
+  },
   statRow: { flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 12, gap: 10 },
   statCard: { flex: 1, padding: 14 },
   statLabel: { fontFamily: tokens.font.sans, fontSize: 9.5, letterSpacing: 1.4, textTransform: 'uppercase', color: tokens.color.faint },
@@ -233,10 +237,7 @@ const s = StyleSheet.create({
     borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
     paddingVertical: 12, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10,
   },
-  composeLogo: {
-    width: 22, height: 22, borderRadius: 6, backgroundColor: tokens.color.primary,
-    alignItems: 'center', justifyContent: 'center',
-  },
+  composeLogo: { width: 22, height: 22, borderRadius: 6, backgroundColor: tokens.color.primary, alignItems: 'center', justifyContent: 'center' },
   composeLogoLetter: { fontFamily: tokens.font.sans, fontStyle: 'italic', fontSize: 12, color: tokens.color.ink },
   composeHint: { flex: 1, fontFamily: tokens.font.sans, fontSize: 12.5, color: tokens.color.faint, fontStyle: 'italic' },
   composeSend: { color: tokens.color.sub, fontSize: 16 },

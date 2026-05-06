@@ -4,6 +4,7 @@ export type RootStackParamList = {
   HabitChat: { habitName: string };
   Main: undefined;
   HabitDetail: undefined;
+  EditPlan: undefined;
   PrepBlock: undefined;
   OverLimit: undefined;
   Unblock: undefined;

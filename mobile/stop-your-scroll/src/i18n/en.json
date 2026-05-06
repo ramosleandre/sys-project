@@ -219,5 +219,17 @@
   "onboarding.placeholder": "Write a reply\u2026",
   "onboarding.done": "Your plan is ready. Welcome to your sanctuary.",
   "onboarding.start": "See my plan",
-  "onboarding.skip": "Skip"
+  "onboarding.skip": "Skip",
+  "plan.weekLabel": "Week 4 / 10",
+  "plan.appsCategory": "Social media",
+  "plan.appsCategoryApps": "Instagram, TikTok, Snapchat",
+  "habitDetail.infos": "Info",
+  "habitDetail.editSchedule": "Edit schedule",
+  "habitDetail.chatTitle": "Chat · {{name}}",
+  "plan.categories": "Categories",
+  "plan.addCategory": "Add a category",
+  "plan.categorySocial": "Social media",
+  "plan.categoryGames": "Video games",
+  "plan.categoryStreaming": "Streaming",
+  "plan.appsInCategory": "{{count}} apps"
 }
