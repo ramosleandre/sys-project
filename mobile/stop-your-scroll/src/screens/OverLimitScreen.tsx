@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,16 +18,17 @@ export function OverLimitScreen({ navigation }: Props) {
   const { t } = useTranslation();
 
   const projections = [
-    { label: t('over.in1y'), val: '\u2212 10 j 8 h', frac: 0.2 },
-    { label: t('over.in5y'), val: '\u2212 52 j', frac: 0.62 },
-    { label: t('over.in10y'), val: '\u2212 104 j', frac: 1.0 },
+    { label: t('over.in1y'), val: '− 10 j 8 h', frac: 0.2 },
+    { label: t('over.in5y'), val: '− 52 j', frac: 0.62 },
+    { label: t('over.in10y'), val: '− 104 j', frac: 1.0 },
   ];
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.topKicker}>
+      <Pressable onPress={() => navigation.goBack()} style={styles.topKicker}>
+        <Text style={styles.backArrow}>‹</Text>
         <Text style={styles.kicker}>{t('over.kicker').toUpperCase()}</Text>
-      </View>
+      </Pressable>
 
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={{ paddingHorizontal: 22, paddingTop: 16 }}>
@@ -110,7 +111,8 @@ export function OverLimitScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: tokens.color.surface },
   scroll: { flex: 1 },
-  topKicker: { paddingHorizontal: 24, paddingTop: 20 },
+  topKicker: { paddingHorizontal: 24, paddingTop: 20, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  backArrow: { color: tokens.color.sub, fontSize: 18, lineHeight: 20 },
   kicker: {
     fontFamily: tokens.font.sans,
     fontSize: 11,

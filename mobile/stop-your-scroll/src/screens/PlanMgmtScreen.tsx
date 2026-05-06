@@ -159,7 +159,7 @@ export function PlanMgmtScreen({ navigation }: Props) {
                   <Text style={styles.strugglingText}>{t('plan.struggling')}</Text>
                 </View>
               )}
-              <Text style={styles.chevron}>{'\u203A'}</Text>
+              <Text style={styles.chevron}>{'›'}</Text>
             </Pressable>
           ))}
         </View>

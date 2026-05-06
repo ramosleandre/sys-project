@@ -25,7 +25,7 @@ function Row({ title, val, warn, onPress }: { title: string; val?: string; warn?
     <Pressable onPress={onPress} style={rowStyles.row}>
       <Text style={[rowStyles.title, warn && { color: tokens.color.warm }]}>{title}</Text>
       {val && <Text style={rowStyles.val}>{val}</Text>}
-      <Text style={rowStyles.chevron}>{'\u203A'}</Text>
+      <Text style={rowStyles.chevron}>{'›'}</Text>
     </Pressable>
   );
 }
@@ -49,7 +49,7 @@ export function AccountScreen({ navigation }: Props) {
               <Text style={styles.avatarLetter}>L</Text>
             </View>
             <View>
-              <Text style={styles.name}>L\u00e9a Morel</Text>
+              <Text style={styles.name}>Léa Morel</Text>
               <Text style={styles.email}>lea.morel@proton.me</Text>
             </View>
           </View>
@@ -77,7 +77,7 @@ export function AccountScreen({ navigation }: Props) {
         <Row title={t('account.notifs')} val={t('account.notifsVal')} />
         <Row title={t('account.appearance')} val={t('account.appearanceVal')} />
         <Row title={t('account.appsWatched')} val="3" />
-        <Row title={t('account.account')} val="Apple \u00b7 L\u00e9a M." />
+        <Row title={t('account.account')} val="Apple · Léa M." />
 
         {/* Language switcher */}
         <View style={langStyles.wrap}>

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import Svg, { Circle as SvgCircle } from 'react-native-svg';
 import { tokens } from '../design-system/tokens';
 import { Numeric } from '../design-system/components/Numeric';
 import { Button } from '../design-system/components/Button';
 
 export function PrepBlockScreen() {
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const [s, setS] = useState(523);
 
@@ -26,8 +28,11 @@ export function PrepBlockScreen() {
     <SafeAreaView style={styles.safe}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.kicker}>{t('prep.kicker').toUpperCase()}</Text>
-        <Text style={styles.time}>20:50 \u2014 23:20</Text>
+        <Pressable onPress={() => navigation.goBack()} style={styles.backRow}>
+          <Text style={styles.backArrow}>‹</Text>
+          <Text style={styles.kicker}>{t('prep.kicker').toUpperCase()}</Text>
+        </Pressable>
+        <Text style={styles.time}>20:50 — 23:20</Text>
       </View>
 
       {/* Center */}
@@ -84,6 +89,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  backRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  backArrow: {
+    color: tokens.color.sub,
+    fontSize: 18,
+    lineHeight: 20,
   },
   kicker: {
     fontFamily: tokens.font.sans,

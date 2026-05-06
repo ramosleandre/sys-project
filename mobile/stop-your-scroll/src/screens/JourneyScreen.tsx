@@ -28,14 +28,14 @@ function JourneyEvolution() {
   const totals = [
     [t('journey.today'), '6 h 48'],
     [t('journey.start'), '10 h 24'],
-    [t('journey.delta'), '\u221235 %'],
+    [t('journey.delta'), '−35 %'],
   ];
 
   const milestones = [
-    { date: 'hier', title: '3e soir cons\u00e9cutif sans Toktik', detail: '42 min reprises' },
-    { date: 'mar. 28', title: 'Premier livre termin\u00e9', detail: '\u00ab L\u2019\u00e9cume des jours \u00bb \u00b7 7 h 12' },
-    { date: 'lun. 20', title: 'Cap des 20 h', detail: 'depuis le d\u00e9but' },
-    { date: 'dim. 12', title: 'Nouvelle habitude \u00b7 marche', detail: 'Sam matin, 15 min' },
+    { date: 'hier', title: '3e soir consécutif sans Toktik', detail: '42 min reprises' },
+    { date: 'mar. 28', title: 'Premier livre terminé', detail: '« L’écume des jours » · 7 h 12' },
+    { date: 'lun. 20', title: 'Cap des 20 h', detail: 'depuis le début' },
+    { date: 'dim. 12', title: 'Nouvelle habitude · marche', detail: 'Sam matin, 15 min' },
   ];
 
   return (
@@ -93,9 +93,9 @@ function JourneyEvolution() {
           <Text style={evoStyles.projSub}>{t('journey.projSub')}</Text>
           <View style={evoStyles.projBar}>
             <View style={evoStyles.projLabels}>
-              <Text style={evoStyles.projLabel}>aujourd'hui \u00b7 27 h</Text>
-              <Text style={evoStyles.projLabel}>1 an \u00b7 171 h</Text>
-              <Text style={evoStyles.projLabel}>2 ans \u00b7 312 h</Text>
+              <Text style={evoStyles.projLabel}>aujourd'hui · 27 h</Text>
+              <Text style={evoStyles.projLabel}>1 an · 171 h</Text>
+              <Text style={evoStyles.projLabel}>2 ans · 312 h</Text>
             </View>
             <View style={evoStyles.projTrack}>
               <View style={[evoStyles.projFill, { width: '8.6%' }]} />
@@ -250,7 +250,7 @@ function JourneyCompare() {
   const habitRows = [
     { name: 'Lecture du soir', prev: '5 / 7', now: '7 / 7', delta: '+2' },
     { name: 'Marche matinale', prev: '0 / 1', now: '1 / 1', delta: '+1' },
-    { name: 'Th\u00e9 sans t\u00e9l\u00e9phone', prev: '3 / 7', now: '2 / 7', delta: '\u22121' },
+    { name: 'Thé sans téléphone', prev: '3 / 7', now: '2 / 7', delta: '−1' },
   ];
 
   return (
@@ -336,7 +336,7 @@ function JourneyCompare() {
               <Text style={cmpStyles.habitArrow}>{'\u2192'}</Text>
               <View style={cmpStyles.habitNowWrap}>
                 <Text style={cmpStyles.habitNow}>{h.now}</Text>
-                <Text style={[cmpStyles.habitDelta, { color: h.delta.startsWith('\u2212') ? tokens.color.warm : tokens.color.sub }]}>
+                <Text style={[cmpStyles.habitDelta, { color: h.delta.startsWith('−') ? tokens.color.warm : tokens.color.sub }]}>
                   {h.delta}
                 </Text>
               </View>

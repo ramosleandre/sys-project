@@ -18,7 +18,7 @@ function DetailRow({ k, v }: { k: string; v: string }) {
     <View style={detailStyles.row}>
       <Text style={detailStyles.key}>{k}</Text>
       <Text style={detailStyles.val}>{v}</Text>
-      <Text style={detailStyles.chevron}>{'\u203A'}</Text>
+      <Text style={detailStyles.chevron}>{'›'}</Text>
     </View>
   );
 }
@@ -43,7 +43,7 @@ export function HabitDetailScreen({ navigation }: Props) {
     <SafeAreaView style={styles.safe} edges={['top']}>
       {/* Header */}
       <Pressable onPress={() => navigation.goBack()} style={styles.backRow}>
-        <Text style={styles.backArrow}>{'\u2039'}</Text>
+        <Text style={styles.backArrow}>{'‹'}</Text>
         <Text style={styles.backLabel}>{t('habitDetail.title').toUpperCase()}</Text>
       </Pressable>
 
@@ -70,7 +70,7 @@ export function HabitDetailScreen({ navigation }: Props) {
             <View style={{ padding: 16, paddingHorizontal: 18, paddingBottom: 8 }}>
               <Eye>{t('habitDetail.settings')}</Eye>
             </View>
-            <DetailRow k={t('habitDetail.schedField')} v="20:50 \u2014 23:20" />
+            <DetailRow k={t('habitDetail.schedField')} v="20:50 — 23:20" />
             <DetailRow k={t('habitDetail.daysField')} v={t('habitDetail.daysVal')} />
             <DetailRow k={t('habitDetail.appsField')} v={t('habitDetail.appsVal')} />
             <DetailRow k={t('habitDetail.prepField')} v={t('habitDetail.prepVal')} />

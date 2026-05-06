@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -16,10 +16,10 @@ export function UnblockScreen({ navigation }: Props) {
   const { t } = useTranslation();
 
   const options = [
-    'x = (e+3) / (e\u22121)',
-    'x = (e\u22123) / (e\u22121)',
+    'x = (e+3) / (e−1)',
+    'x = (e−3) / (e−1)',
     'x = (e+3) / (e+1)',
-    'x = e \u2212 4',
+    'x = e − 4',
   ];
 
   const onComplete = useCallback(() => {
@@ -31,7 +31,10 @@ export function UnblockScreen({ navigation }: Props) {
     <SafeAreaView style={styles.safe}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.kicker}>{t('unblock.kicker').toUpperCase()}</Text>
+        <Pressable onPress={() => navigation.goBack()} style={styles.backRow}>
+          <Text style={styles.backArrow}>‹</Text>
+          <Text style={styles.kicker}>{t('unblock.kicker').toUpperCase()}</Text>
+        </Pressable>
         <Text style={styles.step}>{t('unblock.step')}</Text>
       </View>
 
@@ -42,7 +45,7 @@ export function UnblockScreen({ navigation }: Props) {
 
         <Card style={styles.equationCard}>
           <Text style={styles.equation}>
-            ln(x + 3) {'\u2212'} ln(x {'\u2212'} 1) = 1
+            ln(x + 3) {'−'} ln(x {'−'} 1) = 1
           </Text>
         </Card>
 
@@ -75,7 +78,7 @@ export function UnblockScreen({ navigation }: Props) {
         <HoldButton
           durationMs={60000}
           idleLabel={t('unblock.holdHint')}
-          holdingLabel={`${t('unblock.holding')} \u00b7 {s}s`}
+          holdingLabel={`${t('unblock.holding')} · {s}s`}
           onComplete={onComplete}
         />
         <Text style={styles.releaseWarn}>{t('unblock.releaseWarn')}</Text>
@@ -92,6 +95,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  backRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  backArrow: { color: tokens.color.sub, fontSize: 18, lineHeight: 20 },
   kicker: {
     fontFamily: tokens.font.sans,
     fontSize: 11,

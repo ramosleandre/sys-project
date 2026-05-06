@@ -21,8 +21,8 @@ export function DashboardScreen() {
   ];
 
   const habits = [
-    { name: t('habit.reading'), count: '4 / 5', progress: 0.8, caption: 'hier \u00b7 2 h 14' },
-    { name: t('habit.walking'), count: '3 / 5', progress: 0.6, caption: "aujourd'hui \u00b7 22 min" },
+    { name: t('habit.reading'), count: '4 / 5', progress: 0.8, caption: 'hier · 2 h 14' },
+    { name: t('habit.walking'), count: '3 / 5', progress: 0.6, caption: "aujourd'hui · 22 min" },
     { name: t('habit.tea'), count: '2 / 7', progress: 0.28, caption: 'lundi' },
   ];
 
