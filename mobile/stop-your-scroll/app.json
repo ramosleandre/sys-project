@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.stop-your-scroll"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +29,8 @@
     },
     "plugins": [
       "expo-font",
-      "expo-localization"
+      "expo-localization",
+      "./plugins/withSysAndroidWidget"
     ]
   }
 }
