@@ -1,5 +1,5 @@
 {
-  "brand.name": "Stop your scroll",
+  "brand.name": "Synk",
   "common.next": "Next",
   "common.back": "Back",
   "common.cancel": "Cancel",
@@ -205,5 +205,5 @@
   "account.demoOverVal": "Emergency mode",
   "account.demoUnblock": "Unblock",
   "account.demoUnblockVal": "Ordeal \u00b7 60 s hold",
-  "account.version": "Stop your scroll \u00b7 v2.0.4"
+  "account.version": "Synk \u00b7 v2.0.4"
 }

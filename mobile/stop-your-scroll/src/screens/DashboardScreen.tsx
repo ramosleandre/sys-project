@@ -6,6 +6,7 @@ import { tokens } from '../design-system/tokens';
 import { Eye } from '../design-system/components/Eye';
 import { Card } from '../design-system/components/Card';
 import { Bar } from '../design-system/components/Bar';
+import { BrandLogo } from '../design-system/components/BrandLogo';
 
 export function DashboardScreen() {
   const { t } = useTranslation();
@@ -38,6 +39,10 @@ export function DashboardScreen() {
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         {/* Hero */}
         <View style={styles.hero}>
+          <View style={styles.brandRow}>
+            <BrandLogo size={28} />
+            <Text style={styles.brandName}>{t('brand.name')}</Text>
+          </View>
           {/* <Text style={styles.kicker}>{t('dash.kicker').toUpperCase()}</Text> */}
           <Text style={styles.heroTitle}>
             {t('dash.heroPre')}{'\n'}
@@ -156,6 +161,20 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: tokens.color.surface },
   scroll: { flex: 1 },
   hero: { paddingHorizontal: 22, paddingTop: 14, paddingBottom: 18 },
+  brandRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 12,
+  },
+  brandName: {
+    fontFamily: tokens.font.sans,
+    fontSize: 11,
+    letterSpacing: 1.4,
+    color: tokens.color.sub,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+  },
   kicker: {
     fontFamily: tokens.font.sans,
     fontSize: 11,
@@ -165,8 +184,8 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     fontFamily: tokens.font.sans,
-    fontSize: 28,
-    lineHeight: 28 * 1.1,
+    fontSize: 31,
+    lineHeight: 31 * 1.1,
     letterSpacing: -0.6,
     color: tokens.color.fg,
     marginTop: 10,

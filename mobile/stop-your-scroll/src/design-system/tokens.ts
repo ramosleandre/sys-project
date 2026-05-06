@@ -1,5 +1,5 @@
 /**
- * Stop Your Scroll — Design Tokens
+ * Synk — Design Tokens
  * --------------------------------
  * Single source of truth for colors, type, spacing, radii, motion.
  * Used by every component. Change here, propagate everywhere.

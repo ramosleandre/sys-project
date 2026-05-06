@@ -14,38 +14,10 @@ export function BrandLogo({ size = 44, color = tokens.color.fg }: Props) {
         x="50"
         y="74"
         textAnchor="middle"
-        fontFamily="Georgia"
+        fontFamily="Fraunces, Georgia, serif"
         fontStyle="italic"
         fontWeight="400"
-        fontSize="88"
-        fill={color}
-        opacity="0.3"
-        translateY={21}
-      >
-        s
-      </SvgText>
-      <SvgText
-        x="50"
-        y="74"
-        textAnchor="middle"
-        fontFamily="Georgia"
-        fontStyle="italic"
-        fontWeight="400"
-        fontSize="88"
-        fill={color}
-        opacity="0.55"
-        translateY={10.5}
-      >
-        s
-      </SvgText>
-      <SvgText
-        x="50"
-        y="74"
-        textAnchor="middle"
-        fontFamily="Georgia"
-        fontStyle="italic"
-        fontWeight="400"
-        fontSize="88"
+        fontSize="96"
         fill={color}
       >
         s

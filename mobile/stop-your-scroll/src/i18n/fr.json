@@ -1,5 +1,5 @@
 {
-  "brand.name": "Stop your scroll",
+  "brand.name": "Synk",
   "common.next": "Suivant",
   "common.back": "Retour",
   "common.cancel": "Annuler",
@@ -205,5 +205,5 @@
   "account.demoOverVal": "Mode urgence",
   "account.demoUnblock": "D\u00e9bloquer",
   "account.demoUnblockVal": "\u00c9preuve \u00b7 maintien 60 s",
-  "account.version": "Stop your scroll \u00b7 v2.0.4"
+  "account.version": "Synk \u00b7 v2.0.4"
 }
