@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   brandName: {
     fontFamily: tokens.font.sans,
-    fontSize: 11,
+    fontSize: 16,
     letterSpacing: 1.4,
     color: tokens.color.sub,
     fontWeight: '500',
