@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { Image, ImageSourcePropType, View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Line, Path, Circle, Rect } from 'react-native-svg';
 import { tokens } from '../design-system/tokens';
 import { Eye } from '../design-system/components/Eye';
 import { Card } from '../design-system/components/Card';
-import { AppTile } from '../design-system/components/AppTile';
 import { SegSwitch } from '../design-system/components/SegSwitch';
 
 type JourneyMode = 'evolution' | 'compare';
@@ -220,10 +219,15 @@ function JourneyCompare() {
   const barY = (value: number) => chartH - (value / chartMax) * chartH;
   const barH = (value: number) => (value / chartMax) * chartH;
 
-  const appRows = [
-    { name: 'Picgram', letter: 'i', tone: 'a' as const, trend: 'plus calme', positive: true },
-    { name: 'Toktik', letter: 't', tone: 'b' as const, trend: 'net recul', positive: true },
-    { name: 'Snapfly', letter: 's', tone: 'c' as const, trend: 'à surveiller', positive: false },
+  const appRows: {
+    name: string;
+    logoSource: ImageSourcePropType;
+    trend: string;
+    positive: boolean;
+  }[] = [
+    { name: 'Instagram', logoSource: require('../../assets/apps/Instagram_icon.png'), trend: 'plus calme', positive: true },
+    { name: 'Tiktok', logoSource: require('../../assets/apps/tiktok.webp'), trend: 'net recul', positive: true },
+    { name: 'Snapchat', logoSource: require('../../assets/apps/Snapchat.png'), trend: 'à surveiller', positive: false },
   ];
 
   const habitRows = [
@@ -328,7 +332,9 @@ function JourneyCompare() {
           </View>
           {appRows.map((a, i) => (
             <View key={i} style={cmpStyles.appRow}>
-              <AppTile letter={a.letter} tone={a.tone} size={24} />
+              <View style={cmpStyles.appLogo}>
+                <Image source={a.logoSource} style={cmpStyles.appLogoImage} />
+              </View>
               <Text style={cmpStyles.appName}>{a.name}</Text>
               <Text style={[cmpStyles.appTrend, { color: a.positive ? tokens.color.sub : tokens.color.warm }]}>
                 {a.trend}
@@ -459,6 +465,19 @@ const cmpStyles = StyleSheet.create({
     gap: 12,
   },
   appName: { flex: 1, fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.fg },
+  appLogo: {
+    width: 28,
+    height: 28,
+    borderRadius: tokens.radius.sm,
+    overflow: 'hidden',
+    backgroundColor: tokens.color.cardSoft,
+    borderWidth: tokens.border.hairline,
+    borderColor: tokens.color.lineStrong,
+  },
+  appLogoImage: {
+    width: '100%',
+    height: '100%',
+  },
   appTrend: { fontFamily: tokens.font.sans, fontSize: 12, fontStyle: 'italic' },
   habitRow: {
     paddingVertical: 13,

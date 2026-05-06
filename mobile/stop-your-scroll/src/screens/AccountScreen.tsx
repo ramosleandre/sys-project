@@ -95,7 +95,7 @@ export function AccountScreen({ navigation }: Props) {
         {/* Help */}
         <GroupHead label={t('account.help')} />
         <Row title={t('account.helpCenter')} />
-        <Row title={t('account.contact')} val="bonjour@stopyourscroll.app" />
+        <Row title={t('account.contact')} val="contact@synk.app" />
         <Row title={t('account.legal')} />
 
         {/* Account */}
