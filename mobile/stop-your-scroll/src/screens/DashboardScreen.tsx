@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { Image, ImageSourcePropType, View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { tokens } from '../design-system/tokens';
@@ -10,10 +10,16 @@ import { Bar } from '../design-system/components/Bar';
 export function DashboardScreen() {
   const { t } = useTranslation();
 
-  const socialApps = [
-    { name: 'Toktik', status: t('dash.socialUsed'), warm: true },
-    { name: 'Picgram', status: t('dash.socialShared') },
-    { name: 'Snapfly', status: t('dash.socialShared') },
+  const socialApps: {
+    name: string;
+    logoText: string;
+    logoSource?: ImageSourcePropType;
+    status: string;
+    warm?: boolean;
+  }[] = [
+    { name: 'Tiktok', logoText: 'T', logoSource: require('../../assets/apps/tiktok.webp'), status: t('dash.socialUsed'), warm: true },
+    { name: 'Instagram', logoText: 'P', logoSource: require('../../assets/apps/Instagram_icon.png'), status: t('dash.socialShared') },
+    { name: 'Snapchat', logoText: 'S', logoSource: require('../../assets/apps/Snapchat.png'), status: t('dash.socialShared') },
   ];
 
   const habits = [
@@ -32,7 +38,7 @@ export function DashboardScreen() {
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         {/* Hero */}
         <View style={styles.hero}>
-          <Text style={styles.kicker}>{t('dash.kicker').toUpperCase()}</Text>
+          {/* <Text style={styles.kicker}>{t('dash.kicker').toUpperCase()}</Text> */}
           <Text style={styles.heroTitle}>
             {t('dash.heroPre')}{'\n'}
             <Text style={styles.heroItalic}>{t('dash.heroValue')}</Text> {t('dash.heroPost')}
@@ -90,17 +96,26 @@ export function DashboardScreen() {
           <Card>
             <Eye action={t('dash.socialQuota')}>{t('dash.socials')}</Eye>
             <Text style={styles.socialTitle}>{t('dash.socialTitle')}</Text>
-            <Text style={styles.socialBody}>{t('dash.socialBody')}</Text>
+            <Text style={styles.socialBody}>{t('dash.socialBodyShort')}</Text>
             <View style={styles.socialMeter}>
               <Bar value={0.67} height={6} warm />
             </View>
             <View style={styles.socialApps}>
               {socialApps.map((app, i) => (
                 <View key={i} style={styles.socialApp}>
-                  <Text style={styles.socialAppName}>{app.name}</Text>
-                  <Text style={[styles.socialAppStatus, app.warm && styles.socialAppStatusWarm]}>
-                    {app.status}
-                  </Text>
+                  <View style={styles.socialLogo}>
+                    {app.logoSource ? (
+                      <Image source={app.logoSource} style={styles.socialLogoImage} />
+                    ) : (
+                      <Text style={styles.socialLogoText}>{app.logoText}</Text>
+                    )}
+                  </View>
+                  <View style={styles.socialAppCopy}>
+                    <Text style={styles.socialAppName}>{app.name}</Text>
+                    <Text style={[styles.socialAppStatus, app.warm && styles.socialAppStatusWarm]}>
+                      {app.status}
+                    </Text>
+                  </View>
                 </View>
               ))}
             </View>
@@ -108,14 +123,13 @@ export function DashboardScreen() {
         </View>
 
         {/* Bonnes habitudes */}
-        <View style={[styles.section, { paddingBottom: 22 }]}>
+        {/* <View style={[styles.section, { paddingBottom: 22 }]}>
           <Card padded={false}>
             <View style={{ padding: 16, paddingBottom: 8, paddingHorizontal: 18 }}>
               <Eye action={t('common.seeAll')}>{t('dash.habits')}</Eye>
             </View>
             <View style={styles.habitSummary}>
               <Text style={styles.habitSummaryTitle}>{t('dash.habitSummaryTitle')}</Text>
-              <Text style={styles.habitSummaryBody}>{t('dash.habitSummaryBody')}</Text>
               <View style={styles.habitTiles}>
                 {habits.map((h, i) => (
                   <View key={i} style={styles.habitTile}>
@@ -132,7 +146,7 @@ export function DashboardScreen() {
               </View>
             </View>
           </Card>
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -214,8 +228,8 @@ const styles = StyleSheet.create({
   },
   socialTitle: {
     fontFamily: tokens.font.sans,
-    fontSize: 20,
-    lineHeight: 20 * 1.2,
+    fontSize: 21,
+    lineHeight: 21 * 1.15,
     color: tokens.color.fg,
     marginTop: 10,
   },
@@ -229,17 +243,45 @@ const styles = StyleSheet.create({
   socialMeter: { marginTop: 16 },
   socialApps: {
     marginTop: 14,
-    gap: 8,
+    gap: 10,
   },
   socialApp: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
+    paddingVertical: 2,
+  },
+  socialLogo: {
+    width: 30,
+    height: 30,
+    borderRadius: tokens.radius.sm,
+    backgroundColor: tokens.color.cardSoft,
+    borderWidth: tokens.border.hairline,
+    borderColor: tokens.color.lineStrong,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  socialLogoText: {
+    fontFamily: tokens.font.sans,
+    fontSize: 12,
+    color: tokens.color.sub,
+    fontWeight: '600',
+  },
+  socialLogoImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: tokens.radius.sm,
+  },
+  socialAppCopy: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'baseline',
     justifyContent: 'space-between',
-    gap: 14,
+    gap: 12,
   },
   socialAppName: {
     fontFamily: tokens.font.sans,
-    fontSize: 13,
+    fontSize: 14,
     color: tokens.color.fg,
   },
   socialAppStatus: {
@@ -247,6 +289,7 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: tokens.color.faint,
     fontStyle: 'italic',
+    textAlign: 'right',
   },
   socialAppStatusWarm: { color: tokens.color.warm },
   habitSummary: {
@@ -259,15 +302,8 @@ const styles = StyleSheet.create({
     lineHeight: 19 * 1.25,
     color: tokens.color.fg,
   },
-  habitSummaryBody: {
-    fontFamily: tokens.font.sans,
-    fontSize: 12.5,
-    lineHeight: 12.5 * 1.55,
-    color: tokens.color.sub,
-    marginTop: 6,
-  },
   habitTiles: {
-    marginTop: 14,
+    marginTop: 12,
     gap: 10,
   },
   habitTile: {

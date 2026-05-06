@@ -45,7 +45,7 @@ function JourneyEvolution() {
       {/* Chart */}
       <View style={evoStyles.section}>
         <Card>
-          <Eye action={t('journey.chartAction')}>{t('journey.chartTitle')}</Eye>
+          <Eye>{t('journey.chartTitle')}</Eye>
           <View style={{ marginTop: 16 }}>
             <Svg viewBox={`0 0 ${w} ${h + 14}`} width="100%" height={160}>
               {[0.25, 0.5, 0.75].map((p, i) => (
@@ -58,7 +58,7 @@ function JourneyEvolution() {
             </Svg>
             <Text style={evoStyles.goalLabel}>{t('journey.goalLine')}</Text>
           </View>
-          <Text style={evoStyles.chartSummary}>La tendance descend. C'est le signal important.</Text>
+          <Text style={evoStyles.chartSummary}>12 dernières semaines</Text>
         </Card>
       </View>
 
@@ -80,7 +80,7 @@ function JourneyEvolution() {
       </View>
 
       {/* Milestones */}
-      <View style={{ paddingHorizontal: 22, paddingBottom: 8 }}>
+      {/* <View style={{ paddingHorizontal: 22, paddingBottom: 8 }}>
         <Eye>{t('journey.milestones')}</Eye>
       </View>
       <View style={{ paddingHorizontal: 22 }}>
@@ -93,7 +93,7 @@ function JourneyEvolution() {
             </View>
           </View>
         ))}
-      </View>
+      </View> */}
     </View>
   );
 }

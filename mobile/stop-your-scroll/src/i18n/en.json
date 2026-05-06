@@ -62,6 +62,7 @@
   "dash.socialQuota": "shared quota",
   "dash.socialTitle": "1 h for every social app.",
   "dash.socialBody": "Toktik already used 40 min today. That leaves 20 min shared between Picgram, Snapfly and the rest.",
+  "dash.socialBodyShort": "40 min used on Toktik. 20 min left.",
   "dash.socialUsed": "40 min used",
   "dash.socialShared": "shared remainder",
   "dash.appOver": "over · blocked until tomorrow",
