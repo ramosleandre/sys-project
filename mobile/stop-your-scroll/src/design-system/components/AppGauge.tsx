@@ -1,7 +1,7 @@
 /**
  * AppGauge — one row in the "Réseaux sociaux" bento card.
- *  Tile + name + used/cap + bar + status line.
- *  When `over`, the bar and right-hand label switch to warm.
+ *  Tile + name + quiet progress + status line.
+ *  When `over`, the right-hand label switches to warm.
  */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -28,7 +28,7 @@ export function AppGauge({ letter, name, used, cap, tone, over, status }: Props)
         <View style={styles.head}>
           <Text style={styles.name}>{name}</Text>
           <Text style={[styles.usage, { color: over ? tokens.color.warm : tokens.color.sub }]}>
-            {used} / {cap} min
+            {over ? 'A reprendre' : 'Dans le cadre'}
           </Text>
         </View>
         <View style={{ marginTop: 7 }}>
@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
   head:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   name:   { fontFamily: tokens.font.sans, fontSize: 13.5, color: tokens.color.fg },
   usage:  {
-    fontFamily: tokens.font.numeric, fontSize: 11, letterSpacing: 0.3,
-    // @ts-ignore
-    fontVariant: ['tabular-nums'],
+    fontFamily: tokens.font.sans,
+    fontSize: 11.5,
+    fontStyle: 'italic',
   },
   status: { fontFamily: tokens.font.sans, fontSize: 11, marginTop: 5, fontStyle: 'italic' },
 });

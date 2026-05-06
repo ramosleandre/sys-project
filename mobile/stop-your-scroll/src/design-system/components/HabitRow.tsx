@@ -1,6 +1,6 @@
 /**
  * HabitRow — a row in "Bonnes habitudes" / journey compare.
- *  Italic name + count + progress bar + last-session caption.
+ *  Italic name + readable state + progress bar + last-session caption.
  */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -9,7 +9,7 @@ import { Bar } from './Bar';
 
 type Props = {
   name: string;
-  count: string;       // "4 / 5"
+  count: string;       // "bien parti"
   progress: number;    // 0..1
   caption: string;     // "hier · 2 h 14"
 };
@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
     fontSize: 16, letterSpacing: -0.2, color: tokens.color.fg,
   },
   count:   {
-    fontFamily: tokens.font.numeric, fontSize: 11,
+    fontFamily: tokens.font.sans,
+    fontSize: 11.5,
     color: tokens.color.faint,
-    // @ts-ignore
-    fontVariant: ['tabular-nums'],
+    fontStyle: 'italic',
   },
   caption: { fontFamily: tokens.font.sans, fontSize: 11.5, color: tokens.color.sub },
 });

@@ -1,29 +1,25 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import Svg, { Polyline } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { tokens } from '../design-system/tokens';
 import { Eye } from '../design-system/components/Eye';
 import { Card } from '../design-system/components/Card';
 import { Bar } from '../design-system/components/Bar';
-import { Numeric } from '../design-system/components/Numeric';
-import { AppGauge } from '../design-system/components/AppGauge';
-import { HabitRow } from '../design-system/components/HabitRow';
 
 export function DashboardScreen() {
   const { t } = useTranslation();
 
-  const apps = [
-    { letter: 'i', name: 'Picgram', used: 48, cap: 60, tone: 'a' as const },
-    { letter: 't', name: 'Toktik', used: 92, cap: 45, tone: 'b' as const, over: true },
-    { letter: 's', name: 'Snapfly', used: 12, cap: 30, tone: 'c' as const },
+  const socialApps = [
+    { name: 'Toktik', status: t('dash.socialUsed'), warm: true },
+    { name: 'Picgram', status: t('dash.socialShared') },
+    { name: 'Snapfly', status: t('dash.socialShared') },
   ];
 
   const habits = [
-    { name: t('habit.reading'), count: '4 / 5', progress: 0.8, caption: 'hier · 2 h 14' },
-    { name: t('habit.walking'), count: '3 / 5', progress: 0.6, caption: "aujourd'hui · 22 min" },
-    { name: t('habit.tea'), count: '2 / 7', progress: 0.28, caption: 'lundi' },
+    { name: t('habit.reading'), status: t('dash.habitTonight'), caption: 'repris hier soir' },
+    { name: t('habit.walking'), status: t('dash.habitPlanned'), caption: "prévue aujourd'hui" },
+    { name: t('habit.tea'), status: t('dash.habitTinyStep'), caption: 'petit pas possible' },
   ];
 
   const weekDots: [string, 'done' | 'today' | 'planned'][] = [
@@ -46,7 +42,7 @@ export function DashboardScreen() {
         {/* Objectif */}
         <View style={styles.section}>
           <Card>
-            <Eye action="4 / 7 h">{t('dash.objective')}</Eye>
+            <Eye action="en bonne voie">{t('dash.objective')}</Eye>
             <View style={{ marginTop: 12 }}>
               <Bar value={0.57} height={6} />
             </View>
@@ -72,45 +68,40 @@ export function DashboardScreen() {
           </Card>
         </View>
 
-        {/* Bento row: Temps libéré + Prochain créneau */}
-        <View style={styles.bentoRow}>
-          <Card style={styles.bentoCard}>
-            <Eye>{t('dash.timeFreed')}</Eye>
-            <Numeric size={30} style={{ marginTop: 10 }}>32 h</Numeric>
-            <Text style={styles.since}>{t('dash.timeFreedSince')}</Text>
-            <Svg viewBox="0 0 100 28" width="100%" height={28} style={{ marginTop: 10 }}>
-              <Polyline
-                points="0,22 14,18 28,20 42,12 56,14 70,8 84,10 100,4"
-                fill="none"
-                stroke={tokens.color.primary}
-                strokeWidth={1.2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </Card>
-          <Card style={styles.bentoCard}>
+        {/* Prochain concret */}
+        <View style={styles.section}>
+          <Card>
             <Eye>{t('dash.nextSlot')}</Eye>
-            <Text style={styles.nextWhen}>{t('dash.nextSlotWhen')}</Text>
-            <Numeric size={22} italic style={{ marginTop: 2 }}>20:50</Numeric>
-            <Text style={styles.nextAct}>{t('dash.nextSlotAct')}</Text>
+            <Text style={styles.nextWhen}>Lecture du soir - 1h30</Text>
             <View style={styles.prepPill}>
               <Text style={styles.prepText}>{t('dash.nextSlotPrep')}</Text>
             </View>
+
+            <Text style={styles.nextWhen}>Arroser les plantes - 30 min</Text>
+            <View style={styles.prepPill}>
+              <Text style={styles.prepText}>préparation à 9h45</Text>
+            </View>
+
           </Card>
         </View>
 
         {/* Réseaux sociaux */}
         <View style={styles.section}>
           <Card>
-            <Eye action={t('dash.socialsAction')}>{t('dash.socials')}</Eye>
-            <View style={{ marginTop: 14, gap: 14 }}>
-              {apps.map((a, i) => (
-                <AppGauge
-                  key={i}
-                  {...a}
-                  status={a.over ? t('dash.appOver') : t('dash.appUntil')}
-                />
+            <Eye action={t('dash.socialQuota')}>{t('dash.socials')}</Eye>
+            <Text style={styles.socialTitle}>{t('dash.socialTitle')}</Text>
+            <Text style={styles.socialBody}>{t('dash.socialBody')}</Text>
+            <View style={styles.socialMeter}>
+              <Bar value={0.67} height={6} warm />
+            </View>
+            <View style={styles.socialApps}>
+              {socialApps.map((app, i) => (
+                <View key={i} style={styles.socialApp}>
+                  <Text style={styles.socialAppName}>{app.name}</Text>
+                  <Text style={[styles.socialAppStatus, app.warm && styles.socialAppStatusWarm]}>
+                    {app.status}
+                  </Text>
+                </View>
               ))}
             </View>
           </Card>
@@ -122,17 +113,24 @@ export function DashboardScreen() {
             <View style={{ padding: 16, paddingBottom: 8, paddingHorizontal: 18 }}>
               <Eye action={t('common.seeAll')}>{t('dash.habits')}</Eye>
             </View>
-            {habits.map((h, i) => (
-              <View
-                key={i}
-                style={[
-                  styles.habitCell,
-                  i > 0 && { borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line },
-                ]}
-              >
-                <HabitRow {...h} />
+            <View style={styles.habitSummary}>
+              <Text style={styles.habitSummaryTitle}>{t('dash.habitSummaryTitle')}</Text>
+              <Text style={styles.habitSummaryBody}>{t('dash.habitSummaryBody')}</Text>
+              <View style={styles.habitTiles}>
+                {habits.map((h, i) => (
+                  <View key={i} style={styles.habitTile}>
+                    <View style={styles.habitMarker}>
+                      <Text style={styles.habitMarkerText}>{i + 1}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.habitName}>{h.name}</Text>
+                      <Text style={styles.habitCaption}>{h.caption}</Text>
+                    </View>
+                    <Text style={styles.habitStatus}>{h.status}</Text>
+                  </View>
+                ))}
               </View>
-            ))}
+            </View>
           </Card>
         </View>
       </ScrollView>
@@ -186,24 +184,10 @@ const styles = StyleSheet.create({
     color: tokens.color.sub,
     lineHeight: 13 * 1.5,
   },
-  bentoRow: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    gap: 10,
-  },
-  bentoCard: { flex: 1, padding: 16 },
-  since: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11.5,
-    color: tokens.color.sub,
-    marginTop: 4,
-  },
   nextWhen: {
     fontFamily: tokens.font.sans,
-    fontSize: 22,
-    lineHeight: 22 * 1.05,
-    letterSpacing: -0.4,
+    fontSize: 20,
+    lineHeight: 20 * 1.2,
     color: tokens.color.fg,
     marginTop: 10,
   },
@@ -228,8 +212,106 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: tokens.color.faint,
   },
-  habitCell: {
+  socialTitle: {
+    fontFamily: tokens.font.sans,
+    fontSize: 20,
+    lineHeight: 20 * 1.2,
+    color: tokens.color.fg,
+    marginTop: 10,
+  },
+  socialBody: {
+    fontFamily: tokens.font.sans,
+    fontSize: 12.5,
+    lineHeight: 12.5 * 1.55,
+    color: tokens.color.sub,
+    marginTop: 8,
+  },
+  socialMeter: { marginTop: 16 },
+  socialApps: {
+    marginTop: 14,
+    gap: 8,
+  },
+  socialApp: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 14,
+  },
+  socialAppName: {
+    fontFamily: tokens.font.sans,
+    fontSize: 13,
+    color: tokens.color.fg,
+  },
+  socialAppStatus: {
+    fontFamily: tokens.font.sans,
+    fontSize: 11.5,
+    color: tokens.color.faint,
+    fontStyle: 'italic',
+  },
+  socialAppStatusWarm: { color: tokens.color.warm },
+  habitSummary: {
     paddingHorizontal: 18,
-    paddingVertical: 12,
+    paddingBottom: 18,
+  },
+  habitSummaryTitle: {
+    fontFamily: tokens.font.sans,
+    fontSize: 19,
+    lineHeight: 19 * 1.25,
+    color: tokens.color.fg,
+  },
+  habitSummaryBody: {
+    fontFamily: tokens.font.sans,
+    fontSize: 12.5,
+    lineHeight: 12.5 * 1.55,
+    color: tokens.color.sub,
+    marginTop: 6,
+  },
+  habitTiles: {
+    marginTop: 14,
+    gap: 10,
+  },
+  habitTile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    padding: 12,
+    borderWidth: tokens.border.hairline,
+    borderColor: tokens.color.line,
+    borderRadius: tokens.radius.sm,
+    backgroundColor: tokens.color.fill,
+  },
+  habitMarker: {
+    width: 28,
+    height: 28,
+    borderRadius: tokens.radius.sm,
+    backgroundColor: tokens.color.cardSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  habitMarkerText: {
+    fontFamily: tokens.font.sans,
+    fontSize: 12,
+    color: tokens.color.sub,
+    fontWeight: '600',
+  },
+  habitName: {
+    fontFamily: tokens.font.sans,
+    fontSize: 13.5,
+    color: tokens.color.fg,
+    fontStyle: 'italic',
+  },
+  habitCaption: {
+    fontFamily: tokens.font.sans,
+    fontSize: 11.5,
+    color: tokens.color.faint,
+    marginTop: 2,
+  },
+  habitStatus: {
+    maxWidth: 96,
+    fontFamily: tokens.font.sans,
+    fontSize: 11.5,
+    color: tokens.color.sub,
+    fontStyle: 'italic',
+    textAlign: 'right',
   },
 });

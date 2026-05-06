@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { tokens } from '../design-system/tokens';
+import { BrandLogo } from '../design-system';
 import { Field } from '../design-system/components/Field';
 import { Button } from '../design-system/components/Button';
 import { RootStackParamList } from '../navigation/types';
@@ -32,9 +33,7 @@ export function LoginScreen({ navigation }: Props) {
         <View style={styles.content}>
           {/* Logo */}
           <View style={styles.logoRow}>
-            <View style={styles.logoBox}>
-              <Text style={styles.logoLetter}>s</Text>
-            </View>
+            <BrandLogo size={42} />
             <Text style={styles.brandName}>{t('brand.name').toUpperCase()}</Text>
           </View>
 
@@ -91,21 +90,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     marginBottom: 56,
-  },
-  logoBox: {
-    width: 36,
-    height: 36,
-    borderRadius: 9,
-    backgroundColor: tokens.color.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoLetter: {
-    fontFamily: tokens.font.sans,
-    fontStyle: 'italic',
-    fontSize: 22,
-    color: tokens.color.ink,
-    lineHeight: 26,
   },
   brandName: {
     fontSize: 12,

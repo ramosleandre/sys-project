@@ -6,6 +6,7 @@ export { tokens, color, font, fontSize, space, radius, motion, layout } from './
 export type { ColorToken, SpaceToken, RadiusToken, FontSizeToken } from './tokens';
 
 export { Eye }       from './components/Eye';
+export { BrandLogo } from './components/BrandLogo';
 export { Card }      from './components/Card';
 export { Button }    from './components/Button';
 export { AppTile }   from './components/AppTile';

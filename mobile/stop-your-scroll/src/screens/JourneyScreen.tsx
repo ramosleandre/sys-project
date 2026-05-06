@@ -7,7 +7,6 @@ import { tokens } from '../design-system/tokens';
 import { Eye } from '../design-system/components/Eye';
 import { Card } from '../design-system/components/Card';
 import { Bar } from '../design-system/components/Bar';
-import { Numeric } from '../design-system/components/Numeric';
 import { AppTile } from '../design-system/components/AppTile';
 import { SegSwitch } from '../design-system/components/SegSwitch';
 
@@ -25,17 +24,11 @@ function JourneyEvolution() {
   const area = `${path} L${w},${h} L0,${h} Z`;
   const goalY = h - ((7 - min) / (max - min)) * h;
 
-  const totals = [
-    [t('journey.today'), '6 h 48'],
-    [t('journey.start'), '10 h 24'],
-    [t('journey.delta'), '−35 %'],
-  ];
-
   const milestones = [
-    { date: 'hier', title: '3e soir consécutif sans Toktik', detail: '42 min reprises' },
-    { date: 'mar. 28', title: 'Premier livre terminé', detail: '« L’écume des jours » · 7 h 12' },
-    { date: 'lun. 20', title: 'Cap des 20 h', detail: 'depuis le début' },
-    { date: 'dim. 12', title: 'Nouvelle habitude · marche', detail: 'Sam matin, 15 min' },
+    { date: 'hier', title: 'Soirée sans Toktik', detail: 'envie reprise plus calmement' },
+    { date: 'mar.', title: 'Premier livre terminé', detail: 'lecture redevenue naturelle' },
+    { date: 'lun.', title: 'Temps libéré visible', detail: 'moins de reprises automatiques' },
+    { date: 'dim.', title: 'Nouvelle habitude · marche', detail: 'mise en route le matin' },
   ];
 
   return (
@@ -65,21 +58,7 @@ function JourneyEvolution() {
             </Svg>
             <Text style={evoStyles.goalLabel}>{t('journey.goalLine')}</Text>
           </View>
-          <View style={evoStyles.xAxis}>
-            <Text style={evoStyles.xLabel}>S 8</Text>
-            <Text style={evoStyles.xLabel}>S 12</Text>
-            <Text style={evoStyles.xLabel}>S 16</Text>
-            <Text style={evoStyles.xLabel}>S 19</Text>
-          </View>
-          {/* Totals */}
-          <View style={evoStyles.totalsRow}>
-            {totals.map(([k, v], i) => (
-              <View key={i} style={{ flex: 1 }}>
-                <Text style={evoStyles.totalLabel}>{k}</Text>
-                <Numeric size={17} style={{ marginTop: 6 }}>{v}</Numeric>
-              </View>
-            ))}
-          </View>
+          <Text style={evoStyles.chartSummary}>La tendance descend. C'est le signal important.</Text>
         </Card>
       </View>
 
@@ -92,14 +71,10 @@ function JourneyEvolution() {
           </Text>
           <Text style={evoStyles.projSub}>{t('journey.projSub')}</Text>
           <View style={evoStyles.projBar}>
-            <View style={evoStyles.projLabels}>
-              <Text style={evoStyles.projLabel}>aujourd'hui · 27 h</Text>
-              <Text style={evoStyles.projLabel}>1 an · 171 h</Text>
-              <Text style={evoStyles.projLabel}>2 ans · 312 h</Text>
-            </View>
             <View style={evoStyles.projTrack}>
               <View style={[evoStyles.projFill, { width: '8.6%' }]} />
             </View>
+            <Text style={evoStyles.projLabel}>Le gain commence petit, puis devient visible.</Text>
           </View>
         </Card>
       </View>
@@ -148,31 +123,12 @@ const evoStyles = StyleSheet.create({
     color: tokens.color.warm,
     letterSpacing: 0.3,
   },
-  xAxis: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  chartSummary: {
+    fontFamily: tokens.font.sans,
+    fontSize: 12.5,
+    color: tokens.color.sub,
     marginTop: 10,
-  },
-  xLabel: {
-    fontFamily: tokens.font.sans,
-    fontSize: 9.5,
-    color: tokens.color.faint,
-    letterSpacing: 0.3,
-  },
-  totalsRow: {
-    flexDirection: 'row',
-    gap: 12,
-    marginTop: 18,
-    paddingTop: 14,
-    borderTopWidth: tokens.border.hairline,
-    borderTopColor: tokens.color.line,
-  },
-  totalLabel: {
-    fontFamily: tokens.font.sans,
-    fontSize: 9.5,
-    letterSpacing: 1.3,
-    textTransform: 'uppercase',
-    color: tokens.color.faint,
+    lineHeight: 12.5 * 1.5,
   },
   projTitle: {
     fontFamily: tokens.font.sans,
@@ -189,16 +145,11 @@ const evoStyles = StyleSheet.create({
     marginTop: 8,
     lineHeight: 12.5 * 1.55,
   },
-  projBar: { marginTop: 16, gap: 6 },
-  projLabels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+  projBar: { marginTop: 16, gap: 8 },
   projLabel: {
     fontFamily: tokens.font.sans,
-    fontSize: 10.5,
-    color: tokens.color.faint,
-    letterSpacing: 0.3,
+    fontSize: 12,
+    color: tokens.color.sub,
   },
   projTrack: {
     height: 2,
@@ -242,15 +193,15 @@ function JourneyCompare() {
   const { t } = useTranslation();
 
   const appRows = [
-    { name: 'Picgram', letter: 'i', tone: 'a' as const, prev: '3 h 12', now: '2 h 48', delta: -0.13 },
-    { name: 'Toktik', letter: 't', tone: 'b' as const, prev: '4 h 50', now: '3 h 06', delta: -0.36 },
-    { name: 'Snapfly', letter: 's', tone: 'c' as const, prev: '2 h 20', now: '2 h 24', delta: 0.03 },
+    { name: 'Picgram', letter: 'i', tone: 'a' as const, trend: 'plus calme', positive: true },
+    { name: 'Toktik', letter: 't', tone: 'b' as const, trend: 'net recul', positive: true },
+    { name: 'Snapfly', letter: 's', tone: 'c' as const, trend: 'à surveiller', positive: false },
   ];
 
   const habitRows = [
-    { name: 'Lecture du soir', prev: '5 / 7', now: '7 / 7', delta: '+2' },
-    { name: 'Marche matinale', prev: '0 / 1', now: '1 / 1', delta: '+1' },
-    { name: 'Thé sans téléphone', prev: '3 / 7', now: '2 / 7', delta: '−1' },
+    { name: 'Lecture du soir', trend: 'plus régulière', positive: true },
+    { name: 'Marche matinale', trend: 'installée', positive: true },
+    { name: 'Thé sans téléphone', trend: 'à reprendre', positive: false },
   ];
 
   return (
@@ -265,28 +216,15 @@ function JourneyCompare() {
       <View style={cmpStyles.section}>
         <Card>
           <Eye>{t('journey.cmpScreenTime')}</Eye>
-          <View style={cmpStyles.deltaRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={cmpStyles.deltaLabel}>{t('journey.cmpPrev')}</Text>
-              <Numeric size={28} color={tokens.color.sub} style={{ marginTop: 6 }}>11 h 22</Numeric>
-            </View>
-            <Text style={cmpStyles.arrow}>{'\u2192'}</Text>
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-              <Text style={cmpStyles.deltaLabel}>{t('journey.cmpThisWeek')}</Text>
-              <Numeric size={28} style={{ marginTop: 6 }}>9 h 18</Numeric>
-            </View>
-          </View>
-          {/* Bars */}
-          <View style={{ marginTop: 18, gap: 8 }}>
+          <Text style={cmpStyles.deltaHeadline}>Cette semaine est plus légère.</Text>
+          <View style={{ marginTop: 16, gap: 8 }}>
             <View style={cmpStyles.barRow}>
-              <Text style={[cmpStyles.barLabel, { color: tokens.color.faint }]}>S-1</Text>
+              <Text style={[cmpStyles.barLabel, { color: tokens.color.faint }]}>avant</Text>
               <View style={{ flex: 1 }}><Bar value={0.88} height={6} /></View>
-              <Text style={[cmpStyles.barVal, { color: tokens.color.faint }]}>11 h 22</Text>
             </View>
             <View style={cmpStyles.barRow}>
-              <Text style={[cmpStyles.barLabel, { color: tokens.color.fg, fontWeight: '600' }]}>S 19</Text>
+              <Text style={[cmpStyles.barLabel, { color: tokens.color.fg, fontWeight: '600' }]}>maintenant</Text>
               <View style={{ flex: 1 }}><Bar value={0.72} height={6} /></View>
-              <Text style={[cmpStyles.barVal, { color: tokens.color.fg, fontWeight: '600' }]}>9 h 18</Text>
             </View>
           </View>
           <Text style={cmpStyles.deltaSummary}>
@@ -302,24 +240,15 @@ function JourneyCompare() {
           <View style={{ padding: 16, paddingHorizontal: 18, paddingBottom: 6 }}>
             <Eye>{t('journey.cmpByApp')}</Eye>
           </View>
-          {appRows.map((a, i) => {
-            const dl = (a.delta * 100).toFixed(0);
-            const positive = a.delta < 0;
-            return (
-              <View key={i} style={cmpStyles.appRow}>
-                <AppTile letter={a.letter} tone={a.tone} size={24} />
-                <Text style={cmpStyles.appName}>{a.name}</Text>
-                <View style={cmpStyles.appVals}>
-                  <Text style={cmpStyles.appPrev}>{a.prev}</Text>
-                  <Text style={cmpStyles.appArrow}>{'\u2192'}</Text>
-                  <Text style={cmpStyles.appNow}>{a.now}</Text>
-                  <Text style={[cmpStyles.appDelta, { color: positive ? tokens.color.fg : tokens.color.warm }]}>
-                    {positive ? '' : '+'}{dl}%
-                  </Text>
-                </View>
-              </View>
-            );
-          })}
+          {appRows.map((a, i) => (
+            <View key={i} style={cmpStyles.appRow}>
+              <AppTile letter={a.letter} tone={a.tone} size={24} />
+              <Text style={cmpStyles.appName}>{a.name}</Text>
+              <Text style={[cmpStyles.appTrend, { color: a.positive ? tokens.color.sub : tokens.color.warm }]}>
+                {a.trend}
+              </Text>
+            </View>
+          ))}
         </Card>
       </View>
 
@@ -332,30 +261,11 @@ function JourneyCompare() {
           {habitRows.map((h, i) => (
             <View key={i} style={cmpStyles.habitRow}>
               <Text style={cmpStyles.habitName}>{h.name}</Text>
-              <Text style={cmpStyles.habitPrev}>{h.prev}</Text>
-              <Text style={cmpStyles.habitArrow}>{'\u2192'}</Text>
-              <View style={cmpStyles.habitNowWrap}>
-                <Text style={cmpStyles.habitNow}>{h.now}</Text>
-                <Text style={[cmpStyles.habitDelta, { color: h.delta.startsWith('−') ? tokens.color.warm : tokens.color.sub }]}>
-                  {h.delta}
-                </Text>
-              </View>
+              <Text style={[cmpStyles.habitTrend, { color: h.positive ? tokens.color.sub : tokens.color.warm }]}>
+                {h.trend}
+              </Text>
             </View>
           ))}
-        </Card>
-      </View>
-
-      {/* Small stats */}
-      <View style={cmpStyles.statsGrid}>
-        <Card style={{ flex: 1, padding: 14 }}>
-          <Text style={cmpStyles.statKicker}>{t('journey.cmpEvenings')}</Text>
-          <Numeric size={22} style={{ marginTop: 6 }}>4</Numeric>
-          <Text style={[cmpStyles.statDelta, { color: tokens.color.fg }]}>+1</Text>
-        </Card>
-        <Card style={{ flex: 1, padding: 14 }}>
-          <Text style={cmpStyles.statKicker}>{t('journey.cmpMornings')}</Text>
-          <Numeric size={22} style={{ marginTop: 6 }}>6 / 7</Numeric>
-          <Text style={[cmpStyles.statDelta, { color: tokens.color.faint }]}>=</Text>
         </Card>
       </View>
 
@@ -379,36 +289,23 @@ const cmpStyles = StyleSheet.create({
     color: tokens.color.sub,
     marginTop: 6,
   },
-  deltaRow: {
-    marginTop: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  deltaLabel: {
+  deltaHeadline: {
     fontFamily: tokens.font.sans,
-    fontSize: 9.5,
-    letterSpacing: 1.3,
-    textTransform: 'uppercase',
-    color: tokens.color.faint,
+    fontSize: 20,
+    lineHeight: 20 * 1.2,
+    color: tokens.color.fg,
+    marginTop: 14,
   },
-  arrow: { color: tokens.color.faint, fontSize: 18, lineHeight: 20 },
   barRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
   },
   barLabel: {
-    width: 28,
+    width: 74,
     fontFamily: tokens.font.sans,
     fontSize: 10,
     letterSpacing: 0.4,
-  },
-  barVal: {
-    width: 44,
-    textAlign: 'right',
-    fontFamily: tokens.font.sans,
-    fontSize: 10.5,
   },
   deltaSummary: {
     marginTop: 16,
@@ -427,11 +324,7 @@ const cmpStyles = StyleSheet.create({
     gap: 12,
   },
   appName: { flex: 1, fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.fg },
-  appVals: { flexDirection: 'row', alignItems: 'baseline', gap: 6 },
-  appPrev: { fontFamily: tokens.font.sans, fontSize: 11, color: tokens.color.faint },
-  appArrow: { fontFamily: tokens.font.sans, fontSize: 11, color: tokens.color.faint },
-  appNow: { fontFamily: tokens.font.sans, fontSize: 12, color: tokens.color.fg, fontWeight: '600' },
-  appDelta: { fontFamily: tokens.font.sans, fontSize: 10.5, marginLeft: 4 },
+  appTrend: { fontFamily: tokens.font.sans, fontSize: 12, fontStyle: 'italic' },
   habitRow: {
     paddingVertical: 13,
     paddingHorizontal: 18,
@@ -449,29 +342,7 @@ const cmpStyles = StyleSheet.create({
     letterSpacing: -0.1,
     color: tokens.color.fg,
   },
-  habitPrev: { fontFamily: tokens.font.sans, fontSize: 11, color: tokens.color.faint },
-  habitArrow: { fontFamily: tokens.font.sans, fontSize: 12, color: tokens.color.faint },
-  habitNowWrap: { flexDirection: 'row', gap: 8, alignItems: 'baseline' },
-  habitNow: { fontFamily: tokens.font.sans, fontSize: 12, color: tokens.color.fg, fontWeight: '600' },
-  habitDelta: { fontFamily: tokens.font.sans, fontSize: 10.5 },
-  statsGrid: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    gap: 10,
-  },
-  statKicker: {
-    fontFamily: tokens.font.sans,
-    fontSize: 9.5,
-    letterSpacing: 1.3,
-    textTransform: 'uppercase',
-    color: tokens.color.faint,
-  },
-  statDelta: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    marginTop: 4,
-  },
+  habitTrend: { fontFamily: tokens.font.sans, fontSize: 12, fontStyle: 'italic' },
   footer: {
     paddingHorizontal: 22,
     paddingTop: 4,
