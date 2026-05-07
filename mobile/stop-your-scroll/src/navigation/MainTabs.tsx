@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { DashboardScreen } from '../screens/DashboardScreen';
@@ -7,7 +7,6 @@ import { PlanMgmtScreen } from '../screens/PlanMgmtScreen';
 import { JourneyScreen } from '../screens/JourneyScreen';
 import { AccountScreen } from '../screens/AccountScreen';
 import { Dock, DockId } from '../design-system/components/Dock';
-import { tokens } from '../design-system/tokens';
 import { RootStackParamList } from './types';
 
 export function MainTabsWrapper() {
@@ -15,8 +14,8 @@ export function MainTabsWrapper() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <View className="flex-1 bg-surface">
+      <View className="flex-1">
         {activeTab === 'plan' && <DashboardScreen />}
         {activeTab === 'gestion' && <PlanMgmtScreen navigation={navigation} />}
         {activeTab === 'parcours' && <JourneyScreen />}
@@ -26,8 +25,3 @@ export function MainTabsWrapper() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: tokens.color.surface },
-  content: { flex: 1 },
-});

@@ -4,7 +4,7 @@
  *  When `over`, the right-hand label switches to warm.
  */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { tokens } from '../tokens';
 import { AppTile } from './AppTile';
 import { Bar } from './Bar';
@@ -22,33 +22,22 @@ type Props = {
 export function AppGauge({ letter, name, used, cap, tone, over, status }: Props) {
   const pct = Math.min(used / cap, 1);
   return (
-    <View style={styles.row}>
+    <View className="flex-row items-center gap-3">
       <AppTile letter={letter} tone={tone} />
-      <View style={styles.col}>
-        <View style={styles.head}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={[styles.usage, { color: over ? tokens.color.warm : tokens.color.sub }]}>
+      <View className="flex-1">
+        <View className="flex-row items-baseline justify-between">
+          <Text className="font-sans text-[13.5px] text-fg">{name}</Text>
+          <Text className="font-sans text-[11.5px] italic" style={{ color: over ? tokens.color.warm : tokens.color.sub }}>
             {over ? 'A reprendre' : 'Dans le cadre'}
           </Text>
         </View>
-        <View style={{ marginTop: 7 }}>
+        <View className="mt-[7px]">
           <Bar value={pct} height={2} warm={over} />
         </View>
-        <Text style={[styles.status, { color: over ? tokens.color.warm : tokens.color.faint }]}>{status}</Text>
+        <Text className="mt-[5px] font-sans text-[11px] italic" style={{ color: over ? tokens.color.warm : tokens.color.faint }}>
+          {status}
+        </Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  row:    { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  col:    { flex: 1 },
-  head:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
-  name:   { fontFamily: tokens.font.sans, fontSize: 13.5, color: tokens.color.fg },
-  usage:  {
-    fontFamily: tokens.font.sans,
-    fontSize: 11.5,
-    fontStyle: 'italic',
-  },
-  status: { fontFamily: tokens.font.sans, fontSize: 11, marginTop: 5, fontStyle: 'italic' },
-});

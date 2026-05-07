@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, TextInput, Pressable, ScrollView,
-  StyleSheet, Animated, Easing, KeyboardAvoidingView, Platform,
+  Animated, Easing, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -33,12 +33,12 @@ function TypingDots() {
     });
   }, []);
   return (
-    <View style={bub.typingWrap}>
+    <View className="self-start flex-row gap-1 rounded-[20px] border border-[#2A2520] bg-cardSoft px-4 py-[14px]">
       {dots.map((dot, i) => (
-        <Animated.View key={i} style={[bub.dot, {
+        <Animated.View key={i} className="h-[6px] w-[6px] rounded-full bg-[#5C5447]" style={{
           opacity: dot.interpolate({ inputRange: [0, 1], outputRange: [0.25, 1] }),
           transform: [{ translateY: dot.interpolate({ inputRange: [0, 1], outputRange: [0, -2] }) }],
-        }]} />
+        }} />
       ))}
     </View>
   );
@@ -47,31 +47,15 @@ function TypingDots() {
 function ChatBubble({ from, text }: { from: 'sys' | 'me'; text: string }) {
   const mine = from === 'me';
   return (
-    <View style={[bub.bubble, mine ? bub.mine : bub.sys]}>
-      <Text style={[bub.text, { color: mine ? '#F6F1E7' : tokens.color.fg }]}>{text}</Text>
+    <View
+      className={`max-w-[78%] px-4 py-3 ${mine ? 'self-end rounded-[20px] rounded-br-[6px] bg-toneA' : 'self-start rounded-[20px] rounded-bl-[6px] border border-[#2A2520] bg-cardSoft'}`}
+    >
+      <Text className="font-sans text-[15.5px] leading-[22.475px]" style={{ color: mine ? '#F6F1E7' : tokens.color.fg, letterSpacing: -0.1 }}>
+        {text}
+      </Text>
     </View>
   );
 }
-
-const bub = StyleSheet.create({
-  bubble: { maxWidth: '78%', paddingVertical: 12, paddingHorizontal: 16 },
-  mine: {
-    alignSelf: 'flex-end', backgroundColor: '#2A2722',
-    borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 6,
-  },
-  sys: {
-    alignSelf: 'flex-start', backgroundColor: '#1B1814',
-    borderWidth: 1, borderColor: '#2A2520',
-    borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomLeftRadius: 6, borderBottomRightRadius: 20,
-  },
-  text: { fontFamily: tokens.font.sans, fontSize: 15.5, lineHeight: 15.5 * 1.45, letterSpacing: -0.1 },
-  typingWrap: {
-    alignSelf: 'flex-start', flexDirection: 'row', gap: 4,
-    paddingVertical: 14, paddingHorizontal: 16,
-    backgroundColor: '#1B1814', borderRadius: 20, borderWidth: 1, borderColor: '#2A2520',
-  },
-  dot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#5C5447' },
-});
 
 export function HabitChatScreen({ navigation, route, habitName: propName }: Props) {
   const { t } = useTranslation();
@@ -108,27 +92,27 @@ export function HabitChatScreen({ navigation, route, habitName: propName }: Prop
   const canSend = draft.trim().length > 0;
 
   return (
-    <SafeAreaView style={st.safe}>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <SafeAreaView className="flex-1 bg-[#0F0D0A]">
+      <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         {/* Header */}
-        <View style={st.header}>
-          <Pressable onPress={() => navigation.goBack()} style={st.backRow}>
-            <Text style={st.backArrow}>‹</Text>
-            <Text style={st.headerTitle}>{t('habitDetail.chatTitle', { name })}</Text>
+        <View className="border-b-[0.5px] border-[#231F1A] px-[18px] py-[14px]">
+          <Pressable onPress={() => navigation.goBack()} className="flex-row items-center gap-[10px]">
+            <Text className="text-[18px] leading-5 text-sub">‹</Text>
+            <Text className="font-sans text-[16px] font-medium text-[#EDE4D5]">{t('habitDetail.chatTitle', { name })}</Text>
           </Pressable>
         </View>
 
         {/* Messages */}
-        <ScrollView ref={scrollRef} style={st.messages} contentContainerStyle={st.messagesContent} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        <ScrollView ref={scrollRef} className="flex-1" contentContainerClassName="gap-[10px] px-5 pb-3 pt-5" showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           {messages.map((m, i) => <ChatBubble key={i} from={m.from} text={m.text} />)}
           {isTyping && <TypingDots />}
         </ScrollView>
 
         {/* Input */}
-        <View style={st.inputBar}>
-          <View style={st.inputWrap}>
+        <View className="border-t-[0.5px] border-[#231F1A] bg-[#0F0D0A] px-4 pb-7 pt-3">
+          <View className="flex-row items-center gap-[10px] rounded-full border border-[#231F1A] bg-cardSoft px-[14px] py-[10px]">
             <TextInput
-              style={st.input}
+              className="flex-1 p-0 font-sans text-[15px] text-[#EDE4D5]"
               value={draft}
               onChangeText={setDraft}
               placeholder={t('habitDetail.compose')}
@@ -136,7 +120,7 @@ export function HabitChatScreen({ navigation, route, habitName: propName }: Prop
               onSubmitEditing={handleSend}
               returnKeyType="send"
             />
-            <Pressable onPress={handleSend} disabled={!canSend} style={[st.sendBtn, canSend ? st.sendActive : st.sendDisabled]}>
+            <Pressable onPress={handleSend} disabled={!canSend} className={`h-8 w-8 items-center justify-center rounded-full ${canSend ? 'bg-[#EDE4D5]' : 'bg-[#2A2520]'}`}>
               <Svg width={14} height={14} viewBox="0 0 14 14" fill="none">
                 <Path d="M2 7h10M8 3l4 4-4 4" stroke={canSend ? '#0F0D0A' : '#5C5447'} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
               </Svg>
@@ -147,22 +131,3 @@ export function HabitChatScreen({ navigation, route, habitName: propName }: Prop
     </SafeAreaView>
   );
 }
-
-const st = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0F0D0A' },
-  header: {
-    paddingHorizontal: 18, paddingVertical: 14,
-    borderBottomWidth: 0.5, borderBottomColor: '#231F1A',
-  },
-  backRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  backArrow: { color: tokens.color.sub, fontSize: 18, lineHeight: 20 },
-  headerTitle: { fontFamily: tokens.font.sans, fontSize: 16, color: '#EDE4D5', fontWeight: '500' },
-  messages: { flex: 1 },
-  messagesContent: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 12, gap: 10 },
-  inputBar: { paddingHorizontal: 16, paddingTop: 12, paddingBottom: 28, borderTopWidth: 0.5, borderTopColor: '#231F1A', backgroundColor: '#0F0D0A' },
-  inputWrap: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#1B1814', borderWidth: 1, borderColor: '#231F1A', borderRadius: 999, paddingHorizontal: 14, paddingVertical: 10 },
-  input: { flex: 1, fontFamily: tokens.font.sans, fontSize: 15, color: '#EDE4D5', padding: 0 },
-  sendBtn: { width: 32, height: 32, borderRadius: 999, alignItems: 'center', justifyContent: 'center' },
-  sendActive: { backgroundColor: '#EDE4D5' },
-  sendDisabled: { backgroundColor: '#2A2520' },
-});

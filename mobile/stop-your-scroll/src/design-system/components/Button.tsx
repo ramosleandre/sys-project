@@ -5,7 +5,7 @@
  *  warm     → warm-tinted outline, used only for emergency/over-limit
  */
 import React from 'react';
-import { Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, Text, ViewStyle } from 'react-native';
 import { tokens } from '../tokens';
 
 type Variant = 'primary' | 'ghost' | 'warm';
@@ -16,45 +16,33 @@ type Props = {
   onPress?: () => void;
   style?: ViewStyle;
   fullWidth?: boolean;
+  className?: string;
 };
 
-export function Button({ label, variant = 'primary', onPress, style, fullWidth }: Props) {
+export function Button({ label, variant = 'primary', onPress, style, fullWidth, className }: Props) {
+  const variantClass = {
+    primary: 'bg-primary',
+    ghost: 'border-[0.5px] border-lineStrong bg-transparent',
+    warm: 'border-[0.5px] border-warmLine bg-transparent',
+  }[variant];
+  const labelClass = {
+    primary: 'text-ink',
+    ghost: 'text-sub',
+    warm: 'text-warm',
+  }[variant];
+
   return (
-    <Pressable onPress={onPress} style={[
-      styles.base,
-      variant === 'primary' && styles.primary,
-      variant === 'ghost' && styles.ghost,
-      variant === 'warm' && styles.warm,
-      fullWidth && { alignSelf: 'stretch' },
-      style,
-    ]}>
-      <Text style={[
-        styles.label,
-        variant === 'primary' && { color: tokens.color.ink },
-        variant === 'ghost' && { color: tokens.color.sub },
-        variant === 'warm' && { color: tokens.color.warm },
-      ]}>{label}</Text>
+    <Pressable
+      onPress={onPress}
+      className={`items-center justify-center rounded-[14px] px-[22px] py-[14px] ${variantClass} ${fullWidth ? 'self-stretch' : ''} ${className ?? ''}`}
+      style={style}
+    >
+      <Text
+        className={`font-sans text-[14px] font-medium ${labelClass}`}
+        style={{ letterSpacing: -0.1, fontFamily: tokens.font.sans }}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  base: {
-    paddingVertical: 14, paddingHorizontal: 22,
-    borderRadius: tokens.radius.lg,
-    alignItems: 'center', justifyContent: 'center',
-  },
-  primary: { backgroundColor: tokens.color.primary },
-  ghost: {
-    backgroundColor: 'transparent',
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
-  },
-  warm: {
-    backgroundColor: 'transparent',
-    borderWidth: tokens.border.hairline, borderColor: 'rgba(201,165,122,0.4)',
-  },
-  label: {
-    fontFamily: tokens.font.sans,
-    fontSize: 14, fontWeight: '500', letterSpacing: -0.1,
-  },
-});

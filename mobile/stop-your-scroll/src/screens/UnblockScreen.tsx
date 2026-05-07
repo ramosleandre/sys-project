@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
+import { View, Text, Pressable, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -28,41 +28,43 @@ export function UnblockScreen({ navigation }: Props) {
   }, [navigation]);
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView className="flex-1 bg-surface">
       {/* Header */}
-      <View style={styles.header}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.backRow}>
-          <Text style={styles.backArrow}>‹</Text>
-          <Text style={styles.kicker}>{t('unblock.kicker').toUpperCase()}</Text>
+      <View className="flex-row justify-between px-6 pt-5">
+        <Pressable onPress={() => navigation.goBack()} className="flex-row items-center gap-[10px]">
+          <Text className="text-[18px] leading-5 text-sub">‹</Text>
+          <Text className="font-sans text-[11px] font-medium text-warm" style={{ letterSpacing: 2 }}>
+            {t('unblock.kicker').toUpperCase()}
+          </Text>
         </Pressable>
-        <Text style={styles.step}>{t('unblock.step')}</Text>
+        <Text className="font-sans text-[11px] text-faint" style={{ letterSpacing: 0.3 }}>
+          {t('unblock.step')}
+        </Text>
       </View>
 
       {/* Problem */}
-      <View style={styles.problemWrap}>
-        <Text style={styles.problemLabel}>{t('unblock.problem').toUpperCase()}</Text>
-        <Text style={styles.solveFor}>{t('unblock.solveFor')}</Text>
+      <View className="px-[26px] pt-6">
+        <Text className="font-sans text-[10.5px] font-medium text-faint" style={{ letterSpacing: 1.6 }}>
+          {t('unblock.problem').toUpperCase()}
+        </Text>
+        <Text className="mt-[10px] font-sans text-[26px] leading-[32.5px] text-fg" style={{ letterSpacing: -0.3 }}>
+          {t('unblock.solveFor')}
+        </Text>
 
-        <Card style={styles.equationCard}>
-          <Text style={styles.equation}>
+        <Card className="mt-4 items-center px-[18px] py-[22px]">
+          <Text className="text-center font-sans text-[28px] italic text-fg" style={{ letterSpacing: -0.2 }}>
             ln(x + 3) {'−'} ln(x {'−'} 1) = 1
           </Text>
         </Card>
 
         {/* Options grid */}
-        <View style={styles.optionsGrid}>
+        <View className="mt-5 flex-row flex-wrap gap-[10px]">
           {options.map((opt, i) => (
             <View
               key={i}
-              style={[
-                styles.option,
-                i === 0 && styles.optionSelected,
-              ]}
+              className={`w-[48%] items-center rounded-xl border-[0.5px] px-3 py-4 ${i === 0 ? 'border-primary bg-[rgba(239,234,224,0.04)]' : 'border-line'}`}
             >
-              <Text style={[
-                styles.optionText,
-                { color: i === 0 ? tokens.color.fg : tokens.color.sub },
-              ]}>
+              <Text className="font-sans text-[13px] italic" style={{ color: i === 0 ? tokens.color.fg : tokens.color.sub, letterSpacing: 0.1 }}>
                 {opt}
               </Text>
             </View>
@@ -70,122 +72,23 @@ export function UnblockScreen({ navigation }: Props) {
         </View>
       </View>
 
-      <View style={{ flex: 1 }} />
+      <View className="flex-1" />
 
       {/* Hold to unlock */}
-      <View style={styles.holdSection}>
-        <Text style={styles.holdKicker}>{t('unblock.holdTitle').toUpperCase()}</Text>
+      <View className="px-6 pb-7">
+        <Text className="mb-[10px] font-sans text-[10.5px] font-medium text-faint" style={{ letterSpacing: 1.6 }}>
+          {t('unblock.holdTitle').toUpperCase()}
+        </Text>
         <HoldButton
           durationMs={60000}
           idleLabel={t('unblock.holdHint')}
           holdingLabel={`${t('unblock.holding')} · {s}s`}
           onComplete={onComplete}
         />
-        <Text style={styles.releaseWarn}>{t('unblock.releaseWarn')}</Text>
+        <Text className="mt-3 text-center font-sans text-[11px] text-faint" style={{ letterSpacing: 0.2 }}>
+          {t('unblock.releaseWarn')}
+        </Text>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: tokens.color.surface },
-  header: {
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  backRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  backArrow: { color: tokens.color.sub, fontSize: 18, lineHeight: 20 },
-  kicker: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    letterSpacing: 2,
-    color: tokens.color.warm,
-    fontWeight: '500',
-  },
-  step: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    color: tokens.color.faint,
-    letterSpacing: 0.3,
-  },
-  problemWrap: {
-    paddingHorizontal: 26,
-    paddingTop: 24,
-  },
-  problemLabel: {
-    fontFamily: tokens.font.sans,
-    fontSize: 10.5,
-    letterSpacing: 1.6,
-    color: tokens.color.faint,
-    fontWeight: '500',
-  },
-  solveFor: {
-    fontFamily: tokens.font.sans,
-    fontSize: 26,
-    lineHeight: 26 * 1.25,
-    letterSpacing: -0.3,
-    color: tokens.color.fg,
-    marginTop: 10,
-  },
-  equationCard: {
-    marginTop: 16,
-    paddingVertical: 22,
-    paddingHorizontal: 18,
-    alignItems: 'center',
-  },
-  equation: {
-    fontFamily: tokens.font.sans,
-    fontStyle: 'italic',
-    fontSize: 28,
-    letterSpacing: -0.2,
-    color: tokens.color.fg,
-    textAlign: 'center',
-  },
-  optionsGrid: {
-    marginTop: 20,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  option: {
-    width: '48%',
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    borderWidth: tokens.border.hairline,
-    borderColor: tokens.color.line,
-    borderRadius: 12,
-  },
-  optionSelected: {
-    borderColor: tokens.color.primary,
-    backgroundColor: 'rgba(239,234,224,0.04)',
-  },
-  optionText: {
-    fontFamily: tokens.font.sans,
-    fontStyle: 'italic',
-    fontSize: 13,
-    letterSpacing: 0.1,
-  },
-  holdSection: {
-    paddingHorizontal: 24,
-    paddingBottom: 28,
-  },
-  holdKicker: {
-    fontFamily: tokens.font.sans,
-    fontSize: 10.5,
-    letterSpacing: 1.6,
-    color: tokens.color.faint,
-    fontWeight: '500',
-    marginBottom: 10,
-  },
-  releaseWarn: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    color: tokens.color.faint,
-    textAlign: 'center',
-    marginTop: 12,
-    letterSpacing: 0.2,
-  },
-});

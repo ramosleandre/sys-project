@@ -6,8 +6,7 @@
  *  When hold reaches 100%, calls `onComplete()`. Releasing early resets to 0.
  */
 import React from 'react';
-import { Pressable, Text, View, StyleSheet, Animated } from 'react-native';
-import { tokens } from '../tokens';
+import { Pressable, Text, View, Animated } from 'react-native';
 
 type Props = {
   durationMs: number;
@@ -51,34 +50,19 @@ export function HoldButton({ durationMs, idleLabel, holdingLabel, onComplete }: 
     <Pressable
       onPressIn={() => setPressing(true)}
       onPressOut={() => setPressing(false)}
-      style={styles.wrap}
+      className="relative items-center justify-center overflow-hidden rounded-[14px] border-[0.5px] border-lineStrong bg-card py-[18px]"
     >
-      <Animated.View style={[styles.fill, {
+      <Animated.View className="absolute bottom-0 left-0 top-0 bg-fill" style={{
         width: fillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }),
-      }]} />
+      }} />
       <View pointerEvents="none">
-        <Text style={styles.label}>{label}</Text>
+        <Text
+          className="font-sans text-[13px] text-sub"
+          style={{ letterSpacing: 0.3, fontVariant: ['tabular-nums'] }}
+        >
+          {label}
+        </Text>
       </View>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    position: 'relative', overflow: 'hidden',
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
-    borderRadius: tokens.radius.lg,
-    backgroundColor: tokens.color.card,
-    paddingVertical: 18, alignItems: 'center', justifyContent: 'center',
-  },
-  fill: {
-    position: 'absolute', left: 0, top: 0, bottom: 0,
-    backgroundColor: 'rgba(239,234,224,0.06)',
-  },
-  label: {
-    fontFamily: tokens.font.sans, fontSize: 13,
-    color: tokens.color.sub, letterSpacing: 0.3,
-    // @ts-ignore
-    fontVariant: ['tabular-nums'],
-  },
-});

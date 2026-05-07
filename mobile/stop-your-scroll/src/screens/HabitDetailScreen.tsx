@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TextInput, ScrollView, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
@@ -22,37 +22,19 @@ function PenIcon() {
 
 function Pill({ label, active, onPress }: { label: string; active?: boolean; onPress?: () => void }) {
   return (
-    <Pressable onPress={onPress} style={[pl.base, active && pl.active]}>
-      <Text style={[pl.text, active && pl.textActive]}>{label}</Text>
+    <Pressable onPress={onPress} className={`rounded-full border-[0.5px] px-[14px] py-2 ${active ? 'border-primary bg-primary' : 'border-lineStrong bg-transparent'}`}>
+      <Text className={`font-sans text-[12.5px] ${active ? 'text-ink' : 'text-fg'}`}>{label}</Text>
     </Pressable>
   );
 }
 
-const pl = StyleSheet.create({
-  base: {
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
-    borderRadius: 999, paddingVertical: 8, paddingHorizontal: 14, backgroundColor: 'transparent',
-  },
-  active: { backgroundColor: tokens.color.primary, borderColor: tokens.color.primary },
-  text: { fontFamily: tokens.font.sans, fontSize: 12.5, color: tokens.color.fg },
-  textActive: { color: tokens.color.ink },
-});
-
 function Tag({ label }: { label: string }) {
   return (
-    <View style={tag.base}>
-      <Text style={tag.text}>{label}</Text>
+    <View className="rounded-[10px] border-[0.5px] border-lineStrong bg-fill px-[14px] py-2">
+      <Text className="font-sans text-[13px] text-fg">{label}</Text>
     </View>
   );
 }
-
-const tag = StyleSheet.create({
-  base: {
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
-    borderRadius: 10, paddingVertical: 8, paddingHorizontal: 14, backgroundColor: tokens.color.fill,
-  },
-  text: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.fg },
-});
 
 export function HabitDetailScreen({ navigation }: Props) {
   const { t } = useTranslation();
@@ -76,38 +58,39 @@ export function HabitDetailScreen({ navigation }: Props) {
   ];
 
   return (
-    <SafeAreaView style={s.safe} edges={['top']}>
-      <View style={s.headerRow}>
-        <Pressable onPress={() => navigation.goBack()} style={s.backRow}>
-          <Text style={s.backArrow}>‹</Text>
-          <Text style={s.backLabel}>{t('habitDetail.title').toUpperCase()}</Text>
+    <SafeAreaView className="flex-1 bg-surface" edges={['top']}>
+      <View className="flex-row items-center justify-between px-[18px] py-3">
+        <Pressable onPress={() => navigation.goBack()} className="flex-row items-center gap-[10px]">
+          <Text className="text-[18px] leading-5 text-sub">‹</Text>
+          <Text className="font-sans text-[11px] font-medium text-sub" style={{ letterSpacing: 2 }}>{t('habitDetail.title').toUpperCase()}</Text>
         </Pressable>
         <Pressable onPress={() => setIsEditingName(!isEditingName)} hitSlop={12}>
           <PenIcon />
         </Pressable>
       </View>
 
-      <ScrollView style={s.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Title */}
-        <View style={s.titleBlock}>
+        <View className="px-[22px] pb-[10px] pt-[6px]">
           {isEditingName ? (
             <TextInput
-              style={s.habitNameInput}
+              className="border-b border-lineStrong p-0 pb-1 font-sans text-[28px] italic leading-[30.8px] text-fg"
+              style={{ letterSpacing: -0.5 }}
               value={habitName}
               onChangeText={setHabitName}
               onBlur={() => setIsEditingName(false)}
               autoFocus
             />
           ) : (
-            <Text style={s.habitName}>{habitName}</Text>
+            <Text className="font-sans text-[28px] italic leading-[30.8px] text-fg" style={{ letterSpacing: -0.5 }}>{habitName}</Text>
           )}
         </View>
 
         {/* Days pills */}
-        <View style={s.configSection}>
-          <View style={s.configRow}>
-            <Text style={s.configLabel}>JOURS</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }}>
+        <View className="gap-4 px-[22px] pb-1">
+          <View className="gap-2">
+            <Text className="font-sans text-[10px] font-medium text-faint" style={{ letterSpacing: 1.4 }}>JOURS</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerClassName="gap-[6px]">
               {allDays.map(d => (
                 <Pill
                   key={d}
@@ -123,127 +106,67 @@ export function HabitDetailScreen({ navigation }: Props) {
           </View>
 
           {/* Horaire + Apps coupées + Préparation — compact row */}
-          <View style={s.infoGrid}>
-            <View style={s.infoItem}>
-              <Text style={s.configLabel}>HORAIRE</Text>
-              <View style={s.tagRow}>
+          <View className="flex-row flex-wrap gap-4">
+            <View className="gap-[6px]">
+              <Text className="font-sans text-[10px] font-medium text-faint" style={{ letterSpacing: 1.4 }}>HORAIRE</Text>
+              <View className="flex-row items-center gap-[6px]">
                 <Tag label="20:50" />
-                <Text style={s.tagArrow}>→</Text>
+                <Text className="font-sans text-[13px] text-faint">→</Text>
                 <Tag label="23:20" />
               </View>
             </View>
-            <View style={s.infoItem}>
-              <Text style={s.configLabel}>APPS COUPÉES</Text>
+            <View className="gap-[6px]">
+              <Text className="font-sans text-[10px] font-medium text-faint" style={{ letterSpacing: 1.4 }}>APPS COUPÉES</Text>
               <Tag label={t('plan.appsCategory')} />
             </View>
-            <View style={s.infoItem}>
-              <Text style={s.configLabel}>PRÉPARATION</Text>
+            <View className="gap-[6px]">
+              <Text className="font-sans text-[10px] font-medium text-faint" style={{ letterSpacing: 1.4 }}>PRÉPARATION</Text>
               <Tag label={t('habitDetail.prepVal')} />
             </View>
           </View>
         </View>
 
         {/* Separator */}
-        <View style={s.separator} />
+        <View className="mx-[22px] my-4 h-[0.5px] bg-line" />
 
         {/* Stats */}
-        <View style={s.statRow}>
+        <View className="flex-row gap-[10px] px-4 pb-3">
           {stats.map(([k, v], i) => (
-            <Card key={i} style={s.statCard}>
-              <Text style={s.statLabel}>{k}</Text>
+            <Card key={i} className="flex-1 p-[14px]">
+              <Text className="font-sans text-[9.5px] uppercase text-faint" style={{ letterSpacing: 1.4 }}>{k}</Text>
               <Numeric size={20} style={{ marginTop: 8 }}>{v}</Numeric>
             </Card>
           ))}
         </View>
 
         {/* Too hard */}
-        <View style={s.section}>
+        <View className="px-4 pb-3 pt-[6px]">
           <Card padded={false}>
-            <View style={{ padding: 16, paddingHorizontal: 18, paddingBottom: 4 }}>
+            <View className="px-[18px] pb-1 pt-4">
               <Eye>{t('habitDetail.tooHard')}</Eye>
-              <Text style={s.tooHardSub}>{t('habitDetail.tooHardSub')}</Text>
+              <Text className="mt-2 font-sans text-[13px] leading-[20.15px] text-sub">{t('habitDetail.tooHardSub')}</Text>
             </View>
-            <View style={s.suggestionsWrap}>
+            <View className="gap-[6px] px-[14px] pb-[14px] pt-2">
               {suggestions.map((sg, i) => (
-                <Pressable key={i} style={s.suggestionPill}>
-                  <Text style={s.suggestionText}>{sg}</Text>
+                <Pressable key={i} className="rounded-full border-[0.5px] border-lineStrong bg-fill px-[14px] py-[10px]">
+                  <Text className="font-sans text-[12.5px] text-fg" style={{ letterSpacing: 0.1 }}>{sg}</Text>
                 </Pressable>
               ))}
             </View>
-            <Pressable style={s.compose} onPress={() => navigation.navigate('HabitChat', { habitName })}>
-              <View style={s.composeLogo}>
-                <Text style={s.composeLogoLetter}>s</Text>
+            <Pressable className="flex-row items-center gap-[10px] border-t-[0.5px] border-line px-4 py-3" onPress={() => navigation.navigate('HabitChat', { habitName })}>
+              <View className="h-[22px] w-[22px] items-center justify-center rounded-md bg-primary">
+                <Text className="font-sans text-[12px] italic text-ink">s</Text>
               </View>
-              <Text style={s.composeHint}>{t('habitDetail.compose')}</Text>
-              <Text style={s.composeSend}>›</Text>
+              <Text className="flex-1 font-sans text-[12.5px] italic text-faint">{t('habitDetail.compose')}</Text>
+              <Text className="text-[16px] text-sub">›</Text>
             </Pressable>
           </Card>
         </View>
 
-        <View style={s.danger}>
-          <Text style={s.dangerText}>{t('habitDetail.delete')}</Text>
+        <View className="px-[22px] pb-6 pt-[6px]">
+          <Text className="border-t-[0.5px] border-line py-3 font-sans text-[12.5px] text-warm">{t('habitDetail.delete')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const s = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: tokens.color.surface },
-  scroll: { flex: 1 },
-  headerRow: {
-    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-    paddingHorizontal: 18, paddingVertical: 12,
-  },
-  backRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  backArrow: { color: tokens.color.sub, fontSize: 18, lineHeight: 20 },
-  backLabel: { fontFamily: tokens.font.sans, fontSize: 11, letterSpacing: 2, color: tokens.color.sub, fontWeight: '500' },
-  titleBlock: { paddingHorizontal: 22, paddingTop: 6, paddingBottom: 10 },
-  habitName: {
-    fontFamily: tokens.font.sans, fontStyle: 'italic', fontSize: 28,
-    lineHeight: 28 * 1.1, letterSpacing: -0.5, color: tokens.color.fg,
-  },
-  habitNameInput: {
-    fontFamily: tokens.font.sans, fontStyle: 'italic', fontSize: 28,
-    lineHeight: 28 * 1.1, letterSpacing: -0.5, color: tokens.color.fg,
-    borderBottomWidth: 1, borderBottomColor: tokens.color.lineStrong, paddingBottom: 4, padding: 0,
-  },
-  configSection: { paddingHorizontal: 22, paddingBottom: 4, gap: 16 },
-  configRow: { gap: 8 },
-  configLabel: {
-    fontFamily: tokens.font.sans, fontSize: 10, letterSpacing: 1.4,
-    color: tokens.color.faint, fontWeight: '500',
-  },
-  infoGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
-  infoItem: { gap: 6 },
-  tagRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  tagArrow: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.faint },
-  separator: {
-    height: tokens.border.hairline, backgroundColor: tokens.color.line,
-    marginHorizontal: 22, marginVertical: 16,
-  },
-  statRow: { flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 12, gap: 10 },
-  statCard: { flex: 1, padding: 14 },
-  statLabel: { fontFamily: tokens.font.sans, fontSize: 9.5, letterSpacing: 1.4, textTransform: 'uppercase', color: tokens.color.faint },
-  section: { paddingHorizontal: 16, paddingTop: 6, paddingBottom: 12 },
-  tooHardSub: { fontFamily: tokens.font.sans, fontSize: 13, color: tokens.color.sub, marginTop: 8, lineHeight: 13 * 1.55 },
-  suggestionsWrap: { paddingHorizontal: 14, paddingVertical: 8, paddingBottom: 14, gap: 6 },
-  suggestionPill: {
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.lineStrong,
-    borderRadius: 999, paddingVertical: 10, paddingHorizontal: 14, backgroundColor: tokens.color.fill,
-  },
-  suggestionText: { fontFamily: tokens.font.sans, fontSize: 12.5, color: tokens.color.fg, letterSpacing: 0.1 },
-  compose: {
-    borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
-    paddingVertical: 12, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10,
-  },
-  composeLogo: { width: 22, height: 22, borderRadius: 6, backgroundColor: tokens.color.primary, alignItems: 'center', justifyContent: 'center' },
-  composeLogoLetter: { fontFamily: tokens.font.sans, fontStyle: 'italic', fontSize: 12, color: tokens.color.ink },
-  composeHint: { flex: 1, fontFamily: tokens.font.sans, fontSize: 12.5, color: tokens.color.faint, fontStyle: 'italic' },
-  composeSend: { color: tokens.color.sub, fontSize: 16 },
-  danger: { paddingHorizontal: 22, paddingBottom: 24, paddingTop: 6 },
-  dangerText: {
-    fontFamily: tokens.font.sans, fontSize: 12.5, color: tokens.color.warm,
-    paddingVertical: 12, borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
-  },
-});

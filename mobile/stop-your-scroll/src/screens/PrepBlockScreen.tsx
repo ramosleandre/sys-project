@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -25,20 +25,22 @@ export function PrepBlockScreen() {
   const circumference = 2 * Math.PI * r;
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView className="flex-1 bg-surface">
       {/* Header */}
-      <View style={styles.header}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.backRow}>
-          <Text style={styles.backArrow}>‹</Text>
-          <Text style={styles.kicker}>{t('prep.kicker').toUpperCase()}</Text>
+      <View className="flex-row items-center justify-between px-6 pt-5">
+        <Pressable onPress={() => navigation.goBack()} className="flex-row items-center gap-[10px]">
+          <Text className="text-[18px] leading-5 text-sub">‹</Text>
+          <Text className="font-sans text-[11px] font-medium text-sub" style={{ letterSpacing: 2 }}>
+            {t('prep.kicker').toUpperCase()}
+          </Text>
         </Pressable>
-        <Text style={styles.time}>20:50 — 23:20</Text>
+        <Text className="font-sans text-[11px] text-faint" style={{ letterSpacing: 0.4 }}>20:50 — 23:20</Text>
       </View>
 
       {/* Center */}
-      <View style={styles.center}>
+      <View className="flex-1 items-center justify-center gap-[26px] px-8">
         {/* Ring */}
-        <View style={styles.ringWrap}>
+        <View className="h-[240px] w-[240px]">
           <Svg width={240} height={240} viewBox="0 0 240 240">
             <SvgCircle cx={120} cy={120} r={r} fill="none" stroke={tokens.color.line} strokeWidth={0.75} />
             <SvgCircle
@@ -49,21 +51,25 @@ export function PrepBlockScreen() {
               origin="120,120"
             />
           </Svg>
-          <View style={styles.ringInner}>
-            <Text style={styles.ringLabel}>{t('prep.beforeBlock').toUpperCase()}</Text>
-            <Numeric size={56} style={styles.timer}>
+          <View className="absolute bottom-0 left-0 right-0 top-0 items-center justify-center">
+            <Text className="font-sans text-[10px] text-faint" style={{ letterSpacing: 2.5 }}>
+              {t('prep.beforeBlock').toUpperCase()}
+            </Text>
+            <Numeric size={56} style={{ marginTop: 8 }}>
               {mm}:{String(ss).padStart(2, '0')}
             </Numeric>
-            <Text style={styles.ringSub}>{t('prep.appsCount')}</Text>
+            <Text className="mt-[6px] font-sans text-[11px] text-faint" style={{ letterSpacing: 0.3 }}>
+              {t('prep.appsCount')}
+            </Text>
           </View>
         </View>
 
         {/* Message */}
-        <View style={styles.message}>
-          <Text style={styles.msgTitle}>
+        <View className="max-w-[280px] items-center">
+          <Text className="text-center font-sans text-[22px] leading-[27.5px] text-fg" style={{ letterSpacing: -0.3 }}>
             {t('prep.heroLine1')}{'\n'}{t('prep.heroLine2')}
           </Text>
-          <Text style={styles.msgBody}>
+          <Text className="mt-2 text-center font-sans text-[13px] leading-[19.5px] text-sub">
             {t('prep.silentIn')} {mm}:{String(ss).padStart(2, '0')}.
           </Text>
         </View>
@@ -71,103 +77,14 @@ export function PrepBlockScreen() {
         <Button
           label={t('prep.cantTonight')}
           variant="ghost"
-          style={{ borderRadius: 999, paddingHorizontal: 22 }}
+          className="rounded-full px-[22px]"
         />
       </View>
 
       {/* Footer */}
-      <Text style={styles.footer}>{t('prep.cantCancel')}</Text>
+      <Text className="px-6 pb-7 text-center font-sans text-[10.5px] text-faint" style={{ letterSpacing: 0.3 }}>
+        {t('prep.cantCancel')}
+      </Text>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: tokens.color.surface },
-  header: {
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  backRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  backArrow: {
-    color: tokens.color.sub,
-    fontSize: 18,
-    lineHeight: 20,
-  },
-  kicker: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    letterSpacing: 2,
-    color: tokens.color.sub,
-    fontWeight: '500',
-  },
-  time: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    color: tokens.color.faint,
-    letterSpacing: 0.4,
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    gap: 26,
-  },
-  ringWrap: { width: 240, height: 240 },
-  ringInner: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ringLabel: {
-    fontFamily: tokens.font.sans,
-    fontSize: 10,
-    letterSpacing: 2.5,
-    color: tokens.color.faint,
-  },
-  timer: { marginTop: 8 },
-  ringSub: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    color: tokens.color.faint,
-    marginTop: 6,
-    letterSpacing: 0.3,
-  },
-  message: { alignItems: 'center', maxWidth: 280 },
-  msgTitle: {
-    fontFamily: tokens.font.sans,
-    fontSize: 22,
-    lineHeight: 22 * 1.25,
-    letterSpacing: -0.3,
-    color: tokens.color.fg,
-    textAlign: 'center',
-  },
-  msgBody: {
-    fontFamily: tokens.font.sans,
-    fontSize: 13,
-    color: tokens.color.sub,
-    marginTop: 8,
-    lineHeight: 13 * 1.5,
-    textAlign: 'center',
-  },
-  footer: {
-    paddingHorizontal: 24,
-    paddingBottom: 28,
-    fontFamily: tokens.font.sans,
-    fontSize: 10.5,
-    color: tokens.color.faint,
-    textAlign: 'center',
-    letterSpacing: 0.3,
-  },
-});

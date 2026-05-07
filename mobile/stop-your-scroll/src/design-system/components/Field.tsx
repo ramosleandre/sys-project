@@ -2,7 +2,7 @@
  * Field — login-style underlined input. Read-only display variant + editable.
  */
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { tokens } from '../tokens';
 
 type Props = {
@@ -15,10 +15,13 @@ type Props = {
 
 export function Field({ label, value, onChangeText, secure, editable = true }: Props) {
   return (
-    <View style={styles.wrap}>
-      <Text style={styles.label}>{label}</Text>
+    <View className="border-b-[0.5px] border-lineStrong pb-[10px]">
+      <Text className="font-sans text-[10.5px] font-medium uppercase text-faint" style={{ letterSpacing: tokens.letterSpacing.caps }}>
+        {label}
+      </Text>
       <TextInput
-        style={styles.input}
+        className="mt-[6px] p-0 font-sans text-[16px] text-fg"
+        style={{ fontFamily: tokens.font.sans }}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secure}
@@ -28,20 +31,3 @@ export function Field({ label, value, onChangeText, secure, editable = true }: P
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    borderBottomWidth: tokens.border.hairline,
-    borderBottomColor: tokens.color.lineStrong,
-    paddingBottom: 10,
-  },
-  label: {
-    fontFamily: tokens.font.sans, fontSize: 10.5, fontWeight: '500',
-    letterSpacing: tokens.letterSpacing.caps, textTransform: 'uppercase',
-    color: tokens.color.faint,
-  },
-  input: {
-    fontFamily: tokens.font.sans, fontSize: 16,
-    color: tokens.color.fg, marginTop: 6, padding: 0,
-  },
-});

@@ -51,20 +51,20 @@ export function PlanMgmtScreen({ navigation }: Props) {
   ];
 
   return (
-    <SafeAreaView style={s.safe} edges={['top']}>
-      <ScrollView style={s.scroll} showsVerticalScrollIndicator={false}>
-        <View style={s.header}>
-          <Text style={s.title}>{t('plan.weekLabel')}</Text>
+    <SafeAreaView className="flex-1 bg-surface" edges={['top']}>
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        <View className="px-[22px] pb-2 pt-[14px]">
+          <Text className="font-sans text-[24px] font-semibold text-fg" style={{ letterSpacing: -0.4 }}>{t('plan.weekLabel')}</Text>
         </View>
 
         {/* Calendar */}
-        <View style={s.section}>
+        <View className="px-4 pt-[14px]">
           <Card style={{ padding: 0, overflow: 'hidden' }}>
             {/* Day headers */}
-            <View style={s.dayHeaderBar}>
+            <View className="flex-row border-b-[0.5px] border-line px-2 py-[10px]">
               <View style={{ width: 30 }} />
               {days.map((d, i) => (
-                <Text key={i} style={[s.dayHeader, { color: i === 2 ? tokens.color.fg : tokens.color.faint, fontWeight: i === 2 ? '600' : '400' }]}>
+                <Text key={i} className="flex-1 text-center font-sans text-[10px]" style={{ color: i === 2 ? tokens.color.fg : tokens.color.faint, fontWeight: i === 2 ? '600' : '400' }}>
                   {d}
                 </Text>
               ))}
@@ -105,7 +105,7 @@ export function PlanMgmtScreen({ navigation }: Props) {
                               backgroundColor: ev.current ? tokens.color.primary : '#2A2722',
                             }]}
                           >
-                            <Text style={[s.eventLabel, { color: ev.current ? tokens.color.ink : tokens.color.fg }]} numberOfLines={2}>
+                            <Text className="font-sans text-[8px] italic" style={{ color: ev.current ? tokens.color.ink : tokens.color.fg }} numberOfLines={2}>
                               {ev.label}
                             </Text>
                           </View>
@@ -120,44 +120,44 @@ export function PlanMgmtScreen({ navigation }: Props) {
         </View>
 
         {/* Habits */}
-        <View style={{ paddingHorizontal: 22, paddingTop: 18 }}>
+        <View className="px-[22px] pt-[18px]">
           <Eye>{t('plan.habitsOn')}</Eye>
           {habits.map((h, i) => (
-            <Pressable key={i} onPress={() => navigation.navigate('HabitDetail')} style={s.habitRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={s.habitTitle}>{h.title}</Text>
-                <Text style={s.habitSched}>{h.sched}</Text>
+            <Pressable key={i} onPress={() => navigation.navigate('HabitDetail')} className="flex-row items-center gap-3 border-t-[0.5px] border-line py-3">
+              <View className="flex-1">
+                <Text className="font-sans text-[13.5px] text-fg">{h.title}</Text>
+                <Text className="mt-0.5 font-sans text-[11px] text-faint">{h.sched}</Text>
               </View>
-              <Text style={s.chevron}>›</Text>
+              <Text className="text-[16px] leading-[18px] text-faint">›</Text>
             </Pressable>
           ))}
         </View>
 
         {/* Catégories */}
-        <View style={{ paddingHorizontal: 22, paddingTop: 22 }}>
+        <View className="px-[22px] pt-[22px]">
           <Eye>{t('plan.categories')}</Eye>
-          <Pressable style={s.categoryRow}>
-            <View style={s.categoryBadge}><Text style={s.categoryIcon}>📱</Text></View>
-            <View style={{ flex: 1 }}>
-              <Text style={s.habitTitle}>{t('plan.categorySocial')}</Text>
-              <Text style={s.habitSched}>Instagram, TikTok, Snapchat</Text>
+          <Pressable className="flex-row items-center gap-3 border-t-[0.5px] border-line py-3">
+            <View className="h-8 w-8 items-center justify-center rounded-lg bg-toneA"><Text className="text-[16px]">📱</Text></View>
+            <View className="flex-1">
+              <Text className="font-sans text-[13.5px] text-fg">{t('plan.categorySocial')}</Text>
+              <Text className="mt-0.5 font-sans text-[11px] text-faint">Instagram, TikTok, Snapchat</Text>
             </View>
-            <Text style={s.chevron}>›</Text>
+            <Text className="text-[16px] leading-[18px] text-faint">›</Text>
           </Pressable>
-          <Pressable style={s.categoryRow}>
-            <View style={s.categoryBadge}><Text style={s.categoryIcon}>🎮</Text></View>
-            <View style={{ flex: 1 }}>
-              <Text style={s.habitTitle}>{t('plan.categoryGames')}</Text>
-              <Text style={s.habitSched}>Brawl Stars, Clash Royale</Text>
+          <Pressable className="flex-row items-center gap-3 border-t-[0.5px] border-line py-3">
+            <View className="h-8 w-8 items-center justify-center rounded-lg bg-toneA"><Text className="text-[16px]">🎮</Text></View>
+            <View className="flex-1">
+              <Text className="font-sans text-[13.5px] text-fg">{t('plan.categoryGames')}</Text>
+              <Text className="mt-0.5 font-sans text-[11px] text-faint">Brawl Stars, Clash Royale</Text>
             </View>
-            <Text style={s.chevron}>›</Text>
+            <Text className="text-[16px] leading-[18px] text-faint">›</Text>
           </Pressable>
         </View>
 
-        <View style={{ height: 24 }} />
+        <View className="h-6" />
       </ScrollView>
 
-      <View style={s.bottomCta}>
+      <View className="px-4 pb-2 pt-3">
         <Button label={t('plan.editPlan')} variant="primary" fullWidth onPress={() => navigation.navigate('EditPlan')} />
       </View>
     </SafeAreaView>
@@ -165,32 +165,7 @@ export function PlanMgmtScreen({ navigation }: Props) {
 }
 
 const s = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: tokens.color.surface },
-  scroll: { flex: 1 },
-  header: { paddingHorizontal: 22, paddingTop: 14, paddingBottom: 8 },
-  title: { fontFamily: tokens.font.sans, fontSize: 24, letterSpacing: -0.4, color: tokens.color.fg, fontWeight: '600' },
-  section: { paddingHorizontal: 16, paddingTop: 14 },
-  dayHeaderBar: {
-    flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 8,
-    borderBottomWidth: tokens.border.hairline, borderBottomColor: tokens.color.line,
-  },
-  dayHeader: { flex: 1, textAlign: 'center', fontFamily: tokens.font.sans, fontSize: 10 },
   timeLabel: { fontFamily: tokens.font.sans, fontSize: 8.5, color: tokens.color.faint },
   gridLine: { position: 'absolute', left: 0, right: 0, height: StyleSheet.hairlineWidth, backgroundColor: tokens.color.line },
   event: { position: 'absolute', left: 1, right: 1, borderRadius: 4, paddingHorizontal: 3, paddingVertical: 3 },
-  eventLabel: { fontFamily: tokens.font.sans, fontSize: 8, fontStyle: 'italic' },
-  habitRow: {
-    paddingVertical: 12, borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
-    flexDirection: 'row', alignItems: 'center', gap: 12,
-  },
-  habitTitle: { fontFamily: tokens.font.sans, fontSize: 13.5, color: tokens.color.fg },
-  habitSched: { fontFamily: tokens.font.sans, fontSize: 11, color: tokens.color.faint, marginTop: 2 },
-  chevron: { color: tokens.color.faint, fontSize: 16, lineHeight: 18 },
-  categoryRow: {
-    paddingVertical: 12, borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
-    flexDirection: 'row', alignItems: 'center', gap: 12,
-  },
-  categoryBadge: { width: 32, height: 32, borderRadius: 8, backgroundColor: '#2A2722', alignItems: 'center', justifyContent: 'center' },
-  categoryIcon: { fontSize: 16 },
-  bottomCta: { paddingHorizontal: 16, paddingTop: 12, paddingBottom: 8 },
 });

@@ -3,7 +3,7 @@
  *  Uses the warm cream fill for the active segment.
  */
 import React from 'react';
-import { View, Pressable, Text, StyleSheet } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import { tokens } from '../tokens';
 
 type Tab<T extends string> = { id: T; label: string };
@@ -16,34 +16,24 @@ type Props<T extends string> = {
 
 export function SegSwitch<T extends string>({ tabs, active, onChange }: Props<T>) {
   return (
-    <View style={styles.wrap}>
+    <View className="flex-row rounded-full border-[0.5px] border-line bg-fill p-1">
       {tabs.map(t => {
         const on = t.id === active;
         return (
-          <Pressable key={t.id} onPress={() => onChange(t.id)} style={[
-            styles.cell,
-            on && { backgroundColor: tokens.color.primary },
-          ]}>
-            <Text style={[
-              styles.label,
-              { color: on ? tokens.color.ink : tokens.color.sub, fontWeight: on ? '600' : '400' },
-            ]}>{t.label}</Text>
+          <Pressable
+            key={t.id}
+            onPress={() => onChange(t.id)}
+            className={`flex-1 items-center rounded-full py-2 ${on ? 'bg-primary' : ''}`}
+          >
+            <Text
+              className={`font-sans text-[12.5px] ${on ? 'font-semibold text-ink' : 'font-normal text-sub'}`}
+              style={{ letterSpacing: 0.2, fontFamily: tokens.font.sans }}
+            >
+              {t.label}
+            </Text>
           </Pressable>
         );
       })}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    backgroundColor: tokens.color.fill,
-    borderWidth: tokens.border.hairline, borderColor: tokens.color.line,
-    borderRadius: tokens.radius.pill, padding: 4,
-  },
-  cell: {
-    flex: 1, paddingVertical: 8, alignItems: 'center', borderRadius: tokens.radius.pill,
-  },
-  label: { fontFamily: tokens.font.sans, fontSize: 12.5, letterSpacing: 0.2 },
-});

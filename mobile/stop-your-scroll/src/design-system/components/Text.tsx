@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text as RNText, TextProps, StyleSheet } from 'react-native';
+import { Text as RNText, TextProps } from 'react-native';
 import { color, font, fontSize as fs } from '../tokens';
 
 type Variant =
@@ -24,8 +24,9 @@ export function Text({
   return (
     <RNText
       {...rest}
+      className="p-0"
       style={[
-        styles.base,
+        { includeFontPadding: false } as any,
         {
           color: color[tone],
           fontFamily: numeric ? font.numeric : font.sans,
@@ -42,7 +43,3 @@ export function Text({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  base: { includeFontPadding: false } as any,
-});

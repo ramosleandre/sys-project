@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import './src/i18n';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import './src/design-system/global.css';
@@ -17,7 +17,7 @@ export default function App() {
 
   if (!fontsLoaded) {
     return (
-      <View style={styles.loading}>
+      <View className="flex-1 items-center justify-center bg-surface">
         <ActivityIndicator color="#EFEAE0" />
       </View>
     );
@@ -32,12 +32,3 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  loading: {
-    flex: 1,
-    backgroundColor: '#0A0907',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

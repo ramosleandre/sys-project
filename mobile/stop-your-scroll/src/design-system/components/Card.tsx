@@ -2,29 +2,22 @@
  * Card — bento card surface. Default padded; pass `padded={false}` for list cards.
  */
 import React from 'react';
-import { View, ViewStyle, StyleSheet } from 'react-native';
-import { tokens } from '../tokens';
+import { View, ViewStyle } from 'react-native';
 
 type Props = {
   children: React.ReactNode;
   padded?: boolean;
   style?: ViewStyle | ViewStyle[];
+  className?: string;
 };
 
-export function Card({ children, padded = true, style }: Props) {
+export function Card({ children, padded = true, style, className }: Props) {
   return (
-    <View style={[styles.card, padded && styles.padded, style as any]}>
+    <View
+      className={`rounded-[18px] border border-line bg-card ${padded ? 'p-[18px]' : ''} ${className ?? ''}`}
+      style={style as any}
+    >
       {children}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: tokens.color.card,
-    borderWidth: tokens.border.thin,
-    borderColor: tokens.color.line,
-    borderRadius: tokens.radius.xl,
-  },
-  padded: { padding: tokens.layout.cardPadding },
-});

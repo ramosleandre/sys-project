@@ -3,7 +3,7 @@
  * Wire the `onPress` to your navigator. Active state set by parent.
  */
 import React from 'react';
-import { View, Pressable, Text, StyleSheet } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import Svg, { Circle, Rect, Line, Path } from 'react-native-svg';
 import { tokens } from '../tokens';
 import { useTranslation } from 'react-i18next';
@@ -24,33 +24,22 @@ export function Dock({ active, onChange }: Props) {
     { id: 'compte',   label: t('dock.compte'),   Icon: Person },
   ];
   return (
-    <View style={styles.dock}>
+    <View className="flex-row border-t-[0.5px] border-line bg-surface px-2 pb-[22px] pt-[10px]">
       {items.map(({ id, label, Icon }) => {
         const on = id === active;
         const c = on ? tokens.color.fg : tokens.color.faint;
         return (
-          <Pressable key={id} onPress={() => onChange?.(id)} style={styles.cell}>
+          <Pressable key={id} onPress={() => onChange?.(id)} className="flex-1 items-center gap-[6px] py-[6px]">
             <Icon color={c} />
-            <Text style={[styles.label, { color: c, fontWeight: on ? '500' : '400' }]}>{label}</Text>
+            <Text className="font-sans text-[10.5px]" style={{ color: c, fontWeight: on ? '500' : '400', letterSpacing: 0.4 }}>
+              {label}
+            </Text>
           </Pressable>
         );
       })}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  dock: {
-    flexDirection: 'row',
-    borderTopWidth: tokens.border.hairline, borderTopColor: tokens.color.line,
-    backgroundColor: tokens.color.surface,
-    paddingTop: tokens.layout.dockPaddingY,
-    paddingBottom: tokens.layout.dockPaddingBot,
-    paddingHorizontal: 8,
-  },
-  cell: { flex: 1, alignItems: 'center', gap: 6, paddingVertical: 6 },
-  label: { fontFamily: tokens.font.sans, fontSize: 10.5, letterSpacing: 0.4 },
-});
 
 // ── Glyphs ──
 const DotGrid = ({ color }: { color: string }) => (

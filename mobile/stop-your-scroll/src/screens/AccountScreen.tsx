@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -16,16 +16,18 @@ type Props = {
 
 function GroupHead({ label }: { label: string }) {
   return (
-    <Text style={groupStyles.head}>{label.toUpperCase()}</Text>
+    <Text className="px-[22px] pb-2 pt-[14px] font-sans text-[10.5px] font-medium text-faint" style={{ letterSpacing: 1.6 }}>
+      {label.toUpperCase()}
+    </Text>
   );
 }
 
 function Row({ title, val, warn, onPress }: { title: string; val?: string; warn?: boolean; onPress?: () => void }) {
   return (
-    <Pressable onPress={onPress} style={rowStyles.row}>
-      <Text style={[rowStyles.title, warn && { color: tokens.color.warm }]}>{title}</Text>
-      {val && <Text style={rowStyles.val}>{val}</Text>}
-      <Text style={rowStyles.chevron}>{'›'}</Text>
+    <Pressable onPress={onPress} className="mx-[22px] flex-row items-center gap-3 border-t-[0.5px] border-line py-[13px]">
+      <Text className="flex-1 font-sans text-[13.5px]" style={{ color: warn ? tokens.color.warm : tokens.color.fg }}>{title}</Text>
+      {val && <Text className="font-sans text-[12px] italic text-faint">{val}</Text>}
+      <Text className="text-[16px] leading-[18px] text-faint">{'›'}</Text>
     </Pressable>
   );
 }
@@ -39,35 +41,35 @@ export function AccountScreen({ navigation }: Props) {
   };
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
-      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+    <SafeAreaView className="flex-1 bg-surface" edges={['top']}>
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header + avatar */}
-        <View style={styles.header}>
-          <Text style={styles.kicker}>{t('account.title').toUpperCase()}</Text>
-          <View style={styles.profile}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarLetter}>L</Text>
+        <View className="px-[22px] pb-[22px] pt-[14px]">
+          <Text className="font-sans text-[11px] font-medium text-sub" style={{ letterSpacing: 2 }}>{t('account.title').toUpperCase()}</Text>
+          <View className="mt-[14px] flex-row items-center gap-[14px]">
+            <View className="h-[54px] w-[54px] items-center justify-center rounded-full border-[0.5px] border-lineStrong bg-card">
+              <Text className="font-sans text-[24px] italic text-fg">L</Text>
             </View>
             <View>
-              <Text style={styles.name}>Léa Morel</Text>
-              <Text style={styles.email}>lea.morel@proton.me</Text>
+              <Text className="font-sans text-[22px] text-fg" style={{ letterSpacing: -0.3 }}>Léa Morel</Text>
+              <Text className="mt-0.5 font-sans text-[12px] text-sub">lea.morel@proton.me</Text>
             </View>
           </View>
         </View>
 
         {/* Subscription */}
         <GroupHead label={t('account.subscription')} />
-        <View style={{ paddingHorizontal: 22 }}>
-          <Card style={{ padding: 14, paddingHorizontal: 16 }}>
-            <View style={styles.subRow}>
-              <Text style={styles.planName}>{t('account.plan')}</Text>
-              <Text style={styles.price}>{t('account.price')}</Text>
+        <View className="px-[22px]">
+          <Card className="px-4 py-[14px]">
+            <View className="flex-row items-baseline justify-between">
+              <Text className="font-sans text-[18px] text-fg" style={{ letterSpacing: -0.2 }}>{t('account.plan')}</Text>
+              <Text className="font-sans text-[12px] text-sub">{t('account.price')}</Text>
             </View>
-            <Text style={styles.renew}>{t('account.renew')}</Text>
-            <View style={styles.subLinks}>
-              <Text style={styles.subLink}>{t('account.manage')}</Text>
-              <Text style={styles.subLink}>{t('account.billing')}</Text>
-              <Text style={[styles.subLink, { color: tokens.color.faint }]}>{t('account.restore')}</Text>
+            <Text className="mt-[6px] font-sans text-[11.5px] text-faint">{t('account.renew')}</Text>
+            <View className="mt-3 flex-row gap-4">
+              <Text className="font-sans text-[12px] text-sub">{t('account.manage')}</Text>
+              <Text className="font-sans text-[12px] text-sub">{t('account.billing')}</Text>
+              <Text className="font-sans text-[12px] text-faint">{t('account.restore')}</Text>
             </View>
           </Card>
         </View>
@@ -80,8 +82,8 @@ export function AccountScreen({ navigation }: Props) {
         <Row title={t('account.account')} val="Apple · Léa M." />
 
         {/* Language switcher */}
-        <View style={langStyles.wrap}>
-          <Text style={langStyles.label}>{t('account.language')}</Text>
+        <View className="mx-[22px] gap-[10px] border-t-[0.5px] border-line py-[13px]">
+          <Text className="font-sans text-[13.5px] text-fg">{t('account.language')}</Text>
           <SegSwitch
             tabs={[
               { id: 'fr' as const, label: t('account.langFr') },
@@ -121,153 +123,10 @@ export function AccountScreen({ navigation }: Props) {
           onPress={() => navigation.navigate('Unblock')}
         />
 
-        <Text style={styles.version}>{t('account.version')}</Text>
+        <Text className="px-[22px] py-6 text-center font-sans text-[10.5px] text-faint" style={{ letterSpacing: 0.3 }}>
+          {t('account.version')}
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const groupStyles = StyleSheet.create({
-  head: {
-    paddingHorizontal: 22,
-    paddingTop: 14,
-    paddingBottom: 8,
-    fontFamily: tokens.font.sans,
-    fontSize: 10.5,
-    letterSpacing: 1.6,
-    color: tokens.color.faint,
-    fontWeight: '500',
-  },
-});
-
-const rowStyles = StyleSheet.create({
-  row: {
-    marginHorizontal: 22,
-    paddingVertical: 13,
-    borderTopWidth: tokens.border.hairline,
-    borderTopColor: tokens.color.line,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  title: {
-    flex: 1,
-    fontFamily: tokens.font.sans,
-    fontSize: 13.5,
-    color: tokens.color.fg,
-  },
-  val: {
-    fontFamily: tokens.font.sans,
-    fontSize: 12,
-    color: tokens.color.faint,
-    fontStyle: 'italic',
-  },
-  chevron: {
-    color: tokens.color.faint,
-    fontSize: 16,
-    lineHeight: 18,
-  },
-});
-
-const langStyles = StyleSheet.create({
-  wrap: {
-    marginHorizontal: 22,
-    paddingVertical: 13,
-    borderTopWidth: tokens.border.hairline,
-    borderTopColor: tokens.color.line,
-    gap: 10,
-  },
-  label: {
-    fontFamily: tokens.font.sans,
-    fontSize: 13.5,
-    color: tokens.color.fg,
-  },
-});
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: tokens.color.surface },
-  scroll: { flex: 1 },
-  header: { paddingHorizontal: 22, paddingTop: 14, paddingBottom: 22 },
-  kicker: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11,
-    letterSpacing: 2,
-    color: tokens.color.sub,
-    fontWeight: '500',
-  },
-  profile: {
-    marginTop: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-  },
-  avatar: {
-    width: 54,
-    height: 54,
-    borderRadius: 999,
-    backgroundColor: tokens.color.card,
-    borderWidth: tokens.border.hairline,
-    borderColor: tokens.color.lineStrong,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarLetter: {
-    fontFamily: tokens.font.sans,
-    fontStyle: 'italic',
-    fontSize: 24,
-    color: tokens.color.fg,
-  },
-  name: {
-    fontFamily: tokens.font.sans,
-    fontSize: 22,
-    letterSpacing: -0.3,
-    color: tokens.color.fg,
-  },
-  email: {
-    fontFamily: tokens.font.sans,
-    fontSize: 12,
-    color: tokens.color.sub,
-    marginTop: 2,
-  },
-  subRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-  },
-  planName: {
-    fontFamily: tokens.font.sans,
-    fontSize: 18,
-    letterSpacing: -0.2,
-    color: tokens.color.fg,
-  },
-  price: {
-    fontFamily: tokens.font.sans,
-    fontSize: 12,
-    color: tokens.color.sub,
-  },
-  renew: {
-    fontFamily: tokens.font.sans,
-    fontSize: 11.5,
-    color: tokens.color.faint,
-    marginTop: 6,
-  },
-  subLinks: {
-    flexDirection: 'row',
-    gap: 16,
-    marginTop: 12,
-  },
-  subLink: {
-    fontFamily: tokens.font.sans,
-    fontSize: 12,
-    color: tokens.color.sub,
-  },
-  version: {
-    paddingVertical: 24,
-    paddingHorizontal: 22,
-    textAlign: 'center',
-    fontFamily: tokens.font.sans,
-    fontSize: 10.5,
-    color: tokens.color.faint,
-    letterSpacing: 0.3,
-  },
-});
