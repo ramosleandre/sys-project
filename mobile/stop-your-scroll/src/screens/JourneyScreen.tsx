@@ -23,7 +23,7 @@ function JourneyEvolution() {
   const goalY = h - ((7 - min) / (max - min)) * h;
 
   const milestones = [
-    { date: 'hier', title: 'Soirée sans Toktik', detail: 'envie reprise plus calmement' },
+    { date: 'hier', title: 'Soirée sans TikTok', detail: 'envie reprise plus calmement' },
     { date: 'mar.', title: 'Premier livre terminé', detail: 'lecture redevenue naturelle' },
     { date: 'lun.', title: 'Temps libéré visible', detail: 'moins de reprises automatiques' },
     { date: 'dim.', title: 'Nouvelle habitude · marche', detail: 'mise en route le matin' },
