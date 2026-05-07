@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import './src/i18n';
 import { RootNavigator } from './src/navigation/RootNavigator';
+import './src/design-system/global.css';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
