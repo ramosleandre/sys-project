@@ -41,3 +41,24 @@ uvicorn app.main:app --reload
 ```sh
 curl http://127.0.0.1:8000/api/v1/health
 ```
+
+## Database
+
+Set the PostgreSQL URL in `.env`:
+
+```env
+DATABASE_URL=postgresql+psycopg://postgres:password@localhost:5432/synk
+```
+
+Run migrations:
+
+```sh
+alembic upgrade head
+```
+
+For a local PostgreSQL database:
+
+```sh
+docker-compose up -d postgres
+alembic upgrade head
+```
