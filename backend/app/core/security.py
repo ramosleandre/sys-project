@@ -53,6 +53,37 @@ def create_access_token(subject: str) -> str:
     return _encode_jwt(payload)
 
 
+def decode_access_token(token: str) -> dict[str, Any]:
+    try:
+        encoded_header, encoded_payload, encoded_signature = token.split(".", 2)
+    except ValueError as exc:
+        raise ValueError("Invalid token format.") from exc
+
+    signing_input = f"{encoded_header}.{encoded_payload}"
+    expected_signature = hmac.new(
+        settings.SECRET_KEY.encode("utf-8"),
+        signing_input.encode("utf-8"),
+        hashlib.sha256,
+    ).digest()
+    actual_signature = _base64url_decode(encoded_signature)
+
+    if not hmac.compare_digest(actual_signature, expected_signature):
+        raise ValueError("Invalid token signature.")
+
+    header = _base64url_decode_json(encoded_header)
+    if header.get("alg") != JWT_ALGORITHM:
+        raise ValueError("Invalid token algorithm.")
+
+    payload = _base64url_decode_json(encoded_payload)
+    expires_at = payload.get("exp")
+    if not isinstance(expires_at, int):
+        raise ValueError("Missing token expiration.")
+    if datetime.now(timezone.utc).timestamp() >= expires_at:
+        raise ValueError("Token has expired.")
+
+    return payload
+
+
 def _encode_jwt(payload: dict[str, Any]) -> str:
     header = {"alg": JWT_ALGORITHM, "typ": "JWT"}
     encoded_header = _base64url_encode_json(header)
@@ -74,3 +105,16 @@ def _base64url_encode_json(value: dict[str, Any]) -> str:
 
 def _base64url_encode(value: bytes) -> str:
     return base64.urlsafe_b64encode(value).rstrip(b"=").decode("ascii")
+
+
+def _base64url_decode_json(value: str) -> dict[str, Any]:
+    decoded = _base64url_decode(value)
+    loaded = json.loads(decoded)
+    if not isinstance(loaded, dict):
+        raise ValueError("Invalid token payload.")
+    return loaded
+
+
+def _base64url_decode(value: str) -> bytes:
+    padding = "=" * (-len(value) % 4)
+    return base64.urlsafe_b64decode(value + padding)

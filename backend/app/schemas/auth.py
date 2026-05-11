@@ -15,3 +15,7 @@ class Token(BaseModel):
 
 class AuthResponse(Token):
     user: User
+
+
+class LogoutResponse(BaseModel):
+    message: str
