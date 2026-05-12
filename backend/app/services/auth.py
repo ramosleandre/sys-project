@@ -45,3 +45,4 @@ def build_auth_response(user: User) -> AuthResponse:
         access_token=create_access_token(str(user.id)),
         user=user,
     )
+ 

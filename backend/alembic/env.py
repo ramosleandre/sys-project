@@ -7,7 +7,7 @@ from alembic import context
 
 from app.core.database import Base
 from app.core.config import settings
-from app.models import User  # noqa: F401
+from app.models import Answers, User  # noqa: F401
 
 target_metadata = Base.metadata
 
