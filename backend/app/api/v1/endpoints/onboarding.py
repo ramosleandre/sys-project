@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.api.deps import CurrentAuth, get_current_auth
 from app.core.database import get_db
 from app.schemas.onboarding import AnswersRequest, AnswersResponse
-from app.services.onboarding import create_answers, get_answer_by_id
+from app.services.onboarding import create_answers, get_answer_by_id, get_answer_by_user_id
 
 router = APIRouter(prefix="/onboarding")
 
@@ -20,7 +20,7 @@ async def submit_answers(
         answers.append(create_answers(db, question, current_auth.user))
     return answers
 
-@router.get("/answers/{answer_id}", response_model=AnswersResponse)
+@router.get("/answers/answer/{answer_id}", response_model=AnswersResponse)
 async def get_answer(
     answer_id: int,
     db: Session = Depends(get_db),
@@ -34,3 +34,17 @@ async def get_answer(
         )
 
     return answer
+
+@router.get("/answers/user/{user_id}", response_model=list[AnswersResponse])
+async def get_answer(
+    user_id: int,
+    db: Session = Depends(get_db),
+) -> list[AnswersResponse]:
+    answers = get_answer_by_user_id(db, user_id)
+    if answers is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Answers not found.",
+        )
+
+    return answers

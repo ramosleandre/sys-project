@@ -33,3 +33,13 @@ def get_answer_by_id(db: Session, answer_id: int, current_user: User) -> Answers
             Answers.user_id == current_user.id,
         )
     )
+
+def get_answer_by_user_id(db: Session, user_id: int) -> list[Answers] | None:
+    return list(
+        db.scalars(
+            select(Answers).where(
+                Answers.user_id == user_id
+            )
+        )
+    )
+
