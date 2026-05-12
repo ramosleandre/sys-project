@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.answers import Answers
@@ -23,3 +24,12 @@ def create_answers(db: Session, payload: AnswersRequest, current_user: User) -> 
     db.refresh(answer)
 
     return answer
+
+
+def get_answer_by_id(db: Session, answer_id: int, current_user: User) -> Answers | None:
+    return db.scalar(
+        select(Answers).where(
+            Answers.id == answer_id,
+            Answers.user_id == current_user.id,
+        )
+    )
