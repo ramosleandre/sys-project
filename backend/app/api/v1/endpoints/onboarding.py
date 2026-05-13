@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import CurrentAuth, get_current_auth
 from app.core.database import get_db
-from app.schemas.onboarding import AnswersRequest, AnswersResponse
+from app.schemas.onboarding import AnswersRequest, AnswersResponse, GeneratedPlan
 from app.services.onboarding import create_answers, get_answer_by_id, get_answer_by_user_id
 
 router = APIRouter(prefix="/onboarding")
@@ -48,3 +48,6 @@ async def get_answer(
         )
 
     return answers
+
+# @router.post("/generate-plan", response_model=GeneratedPlan)
+# async def generate_plan(db, user_id) -> GeneratedPlan:

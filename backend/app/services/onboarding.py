@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.models.answers import Answers
 from app.models.user import User
-from app.schemas.onboarding import AnswersRequest
-
+from app.schemas.onboarding import AnswersRequest, GeneratedPlan
+from app.services.openai import OpenAI
 
 def create_answers(db: Session, payload: AnswersRequest, current_user: User) -> Answers:
     now = datetime.now(timezone.utc)
@@ -43,3 +43,23 @@ def get_answer_by_user_id(db: Session, user_id: int) -> list[Answers] | None:
         )
     )
 
+def create_plan(db: Session,  current_user: User) -> GeneratedPlan | None:
+    user_answers: Answers = get_answer_by_user_id(db, current_user.id)
+    diagnosis: list[Answers] = []
+    goals: list[Answers] = []
+    contraint: Answers = []
+
+    for answer in user_answers:
+        if answer.question_id <= 4:
+            diagnosis.append(answer)
+        if answer.question_id > 4 and answer.question_id <= 6:
+            goals.append(answer)
+        if answer.question_id == 7:
+            contraint = answer
+    plan: GeneratedPlan = OpenAI().generate_plan_ai(diagnosis, goals, contraint)
+
+    db.add(plan)
+    db.commit()
+    db.refresh(plan)
+
+    return plan
