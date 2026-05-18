@@ -1,7 +1,12 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Optional, Literal
 from datetime import time, date, datetime
-from uuid import UUID
+
+class Questions(BaseModel):
+    id: int
+    text: str
+
+    model_config = {"from_attributes": True}
 
 class AnswersResponse(BaseModel):
     id: int
@@ -35,9 +40,7 @@ class Habit(BaseModel):
         ]
     ]
 
-class GeneratedPlan(BaseModel):
-    id: int
-    user_id: int
+class GeneratedPlanPayload(BaseModel):
     title: str
     summary: str
     main_problem: Literal[
@@ -77,5 +80,11 @@ class GeneratedPlan(BaseModel):
 
     motivational_sentence: str
 
+
+class GeneratedPlan(GeneratedPlanPayload):
+    id: int
+    user_id: int
     created_at: datetime
     updated_at: datetime
+
+    model_config = {"from_attributes": True}
